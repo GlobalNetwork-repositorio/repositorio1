@@ -3,20 +3,7 @@
     <div [@routerTransition]>
         <div class="row">
             <div class="col col-xl-12 col-lg-12">
-                <div class="nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <!-- <button type="button" class="btn btn-success btn-sm" [routerLink]="['/egresos/crud-egresos']" [routerLinkActive]="['router-link-active']"
-                                (click)="onLoggedin()">Crear Egreso</button> -->
-                            <!-- <button type="button" class="btn btn-outline-primary btn-sm">Descargar</button> -->
-                        </li>
-                    </ul>
-                    <!-- <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Busqueda" #txtbusqueda (keyup)="buscar(txtbusqueda.value)">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                    </form> -->
-                </div>
-                <!-- <hr> -->
+
                 <div class="card mb-3">
                     <div class="card-header">
                         Historial Egresos <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
@@ -35,47 +22,6 @@
                         <p-column field="conceptoEgreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>
                         <p-column field="medioPago.descripcionMedioPago" [style]="{'width':'120px'}"  header="medio" [filter]="ShowBuqueda"></p-column>
                     </p-dataTable>
-
-                    <!-- <div class="card-body table-responsive">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Fecha/Hora</th>
-                                    <th>Monto</th>
-                                    <th>Sucursal</th>
-                                    <th>Cuenta</th>
-                                    <th>Concepto</th>
-                                    <th>Medio de Pago</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let item of db_egresos; let i = index">
-                                <tr *ngIf="item">                                    
-                                    <th scope="row">{{i+1}}</th>                                    
-                                    <td>{{item.fecha | date:'dd/MM/yyyy'}}</td>
-                                    <td>{{item.monto | number:'0.2'}}</td>
-                                    <td>{{item.sucursal.descripcion}}</td>      
-                                    <td>{{item.cuenta.banco}}</td>                                                                  
-                                    <td>{{item.conceptoEgreso.descripcion}}</td>
-                                    <td>{{item.medioPago.descripcionMedioPago}}</td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                </ng-container>
-                            </tbody>
-                        </table>
-                    </div> -->
                 </div>
             </div>
         </div>

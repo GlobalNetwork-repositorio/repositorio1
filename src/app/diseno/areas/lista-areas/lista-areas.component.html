@@ -1,87 +1,27 @@
-<div [@routerTransition]>
-    <app-page-header  [heading]="'Areas'" [icon]="'fa-desktop'"></app-page-header>
+<div [@routerTransition] [hidden]="showChild">
+    <app-page-header [heading]="'Areas'" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
-        <div class="row">
-            <div class="col col-xl-12 col-lg-12">
-                <div class="nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <button type="button" class="btn btn-success" [routerLink]="['crud-areas']" [routerLinkActive]="['router-link-active']"
-                               >Crear Area</button>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Busqueda">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
-                </div>
-                <hr>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Areas de la empresa
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Descripcion</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Administracion</td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Personal</td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Secretaria</td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="row">
+                <div class="col col-xl-12 col-lg-12">            
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Historial Areas <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
+                            <div class="float-right">
+                                <button type="button" class="btn btn-success btn-sm" [routerLink]="['./crud-areas']"
+                                    (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Crear Egreso</button>
+                                </div>
+                            </div>
+        
+                            <p-dataTable class="f-12" [value]="db_area" [filterDelay]=500 [lazy]="true" 
+                                 (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
+                                <p-column field="idArea"  header="ID" [style]="{'width':'50px'}" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="descripcion"  header="Area" [filter]="ShowBuqueda"></p-column>
+                            </p-dataTable>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-</div>
-
-<div class="container">
-    <router-outlet></router-outlet>
+</div>        
+<div class="container-fluid" >    
+        <router-outlet (activate)='onActivateChild()' (deactivate)='onDeactivateChild()'></router-outlet>
 </div>

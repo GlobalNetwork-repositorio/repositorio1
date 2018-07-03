@@ -8,7 +8,6 @@ import { SidebarComponent } from './estructura_sistema/sidebar/sidebar.component
 import { HeaderComponent } from './estructura_sistema/header/header.component';
 import { ServiceModule } from './services/service.module';
 
-
 @NgModule({
     imports: [
         CommonModule,        

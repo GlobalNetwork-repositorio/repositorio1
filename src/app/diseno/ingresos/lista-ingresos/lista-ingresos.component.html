@@ -1,84 +1,32 @@
-<div [@routerTransition]>
+<div [@routerTransition] [hidden]="showChild">
     <app-page-header [heading]="'Ingresos'" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
         <div class="row">
-            <div class="col col-xl-12 col-lg-12">
-                <div class="nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <button type="button" class="btn btn-success" [routerLink]="['/ingresos/crud-ingresos']" [routerLinkActive]="['router-link-active']"
-                                (click)="onLoggedin()">Crear Ingreso</button>
-                            <button type="button" class="btn btn-outline-primary">Descargar</button>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Busqueda" #txtbusqueda (keyup)="buscar(txtbusqueda.value)">
-                        <ng-select [items]="filtros"
-                                [addTag]="true"
-                                [multiple]="true"
-                                [isOpen]="false">
-                        </ng-select>
-                        <!-- <ng-select [items]="filtros"
-                                [addTag]="true"
-                                [hideSelected]="true"
-                                multiple="true"
-                                bindLabel="filtro">
-                        </ng-select>
-                        {{filtros | json}} -->
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
-                </div>
-                <hr>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Historial Ingreso
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>#</th>                                    
-                                    <th>Fecha/Hora</th>
-                                    <th>Monto</th>
-                                    <th>Sucursal</th>
-                                    <th>Cuenta</th>
-                                    <th>Concepto</th>
-                                    <th>Medio de Pago</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let item of db_ingreso; let i = index">
-                                <tr *ngIf="item">
-                                    <th scope="row">1</th>            
-                                    <td>{{item.fecha | date:'dd/MM/yyyy'}}</td>
-                                    <td>{{item.montoIngresado | number:'0.2'}}</td>
-                                    <td>{{item.sucursal.descripcion}}</td>      
-                                    <td>{{item.cuenta.banco}}</td>                                                                  
-                                    <td>{{item.conceptoIngreso.descripcion}}</td>
-                                    <td>{{item.medioPago.descripcionMedioPago}}</td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                    <td width="1">
-                                        <button type="button" class="btn btn-outline-success">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                </ng-container>
-                            </tbody>
-                        </table>
+                <div class="col col-xl-12 col-lg-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                Historial de Ingresos <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
+                                <div class="float-right">
+                                        <button type="button" class="btn btn-success btn-sm" [routerLink]="['./crud-ingresos']"
+                                        (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Nuevo Ingreso</button>
+                                </div>
+                            </div>
+        
+                            <p-dataTable class="f-12" [value]="db_ingreso" [filterDelay]=500 [lazy]="true" 
+                                (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
+                                <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="monto"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="sucursal.descripcion" [style]="{'width':'150px'}" header="Sucursal" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="cuenta.banco"  header="Banco" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="conceptoIngreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="medioPago.descripcionMedioPago" [style]="{'width':'120px'}"  header="medio" [filter]="ShowBuqueda"></p-column>
+                            </p-dataTable>        
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="container-fluit">
-    <router-outlet></router-outlet>
-</div>
+        
+        <div class="container" >    
+            <router-outlet (activate)='onActivate()' (deactivate)='onDeactivate()'></router-outlet>
+        </div>

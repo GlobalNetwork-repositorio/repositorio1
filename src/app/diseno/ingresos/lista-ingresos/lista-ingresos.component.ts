@@ -13,6 +13,9 @@ export class ListaIngresosComponent implements OnInit {
 
   ingresoSModel: Ingreso[];
   db_ingreso: any;
+  ShowBuqueda: boolean = false;
+  showChild: boolean = false;
+
   filtros: any = [{filtro: '', tag: true}];
   constructor(private crudService: CrudService, private ingresoService: IngresosService) { }
 
@@ -32,4 +35,7 @@ export class ListaIngresosComponent implements OnInit {
     this.db_ingreso = this.ingresoService.buscar(this.ingresoSModel, parametro);
   }
 
+  ShowChild() { this.showChild = !this.showChild }
+  onDeactivate() { this.ShowChild(); }
+  onActivate() { this.showChild = true; }
 }

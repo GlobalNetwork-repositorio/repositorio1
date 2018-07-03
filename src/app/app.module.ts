@@ -24,7 +24,7 @@ import { SharedModule } from './shared/shared.module';
         ReactiveFormsModule,
         HttpClientModule,     
         AppRoutingModule,
-        SharedModule     
+        SharedModule
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

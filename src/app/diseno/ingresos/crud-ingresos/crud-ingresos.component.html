@@ -1,9 +1,6 @@
         <div [@routerTransition]>
                 <app-page-header [heading]="'Ingresos'" [icon]="'fa-desktop'"></app-page-header>
                 <div [@routerTransition]>
-
-
-
                   <div class="row">
                     <div class="col col-xl-12 col-lg-12">
                       <div class="card mb-3">
@@ -11,149 +8,68 @@
                           Nuevo Ingreso
                         </div>
                         <div class="card-header">
-                            <form [formGroup]="form">                     
-                                <br><br>
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Usuario</label>
-                                    <div class="col-10">
-                                      <input class="form-control" type="text" [value]="usuarioModel.nombreApellido"  readonly>
-                                    </div>
+
+                            <form [formGroup]="form">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                      <mat-form-field class="w-100">
+                                          <input matInput placeholder="Usuario" formControlName="usuario" readonly>
+                                      </mat-form-field>
+      
+                                      <mat-form-field class="w-100">
+                                          <mat-select placeholder="Sucursal" formControlName="sucursal">
+                                            <mat-option *ngFor="let sucursal of db_sucursal" [value]="sucursal | json">
+                                              {{sucursal.descripcion}}
+                                            </mat-option>
+                                          </mat-select>
+                                      </mat-form-field>
+      
+                                      <mat-form-field class="w-100">
+                                          <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
+                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                          <mat-datepicker #picker></mat-datepicker>
+                                      </mat-form-field>                                
                                   </div>
                                   
-                                  <div class="form-group row">
-                                      <label for="idarea-input" class="col-2 col-form-label">Fecha del ingreso</label>
-                                      <div class="col-10">
-                                        <input type="date" class="form-control" formControlName="fecha"  name="" id="">
-                                      </div>
-                                    </div>
-        
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Concepto</label>
-                                    <div class="col-10">                                        
-                                        <ng-select formControlName="conceptoIngreso" class="custom" [items]="db_concepto_ingreso"
-                                            [addTag]="false"                                            
-                                            bindLabel="descripcion"
-                                            biddValue="idConceptoIngreso"
-                                            [(ngModel)]="selectConceptoIngreso">
-                                        </ng-select>                                
-                                    </div>
+                                  <div class="col-md-8">
+      
+                                    <mat-form-field class="w-100">
+                                      <input matInput placeholder="Motivo" aria-label="Sucursal" [matAutocomplete]="auto" formControlName="conceptoIngreso">
+                                      <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let concepto of db_concepto_ingreso" [value]="concepto | json">
+                                          <span>{{concepto.descripcion}}</span>
+                                        </mat-option>
+                                      </mat-autocomplete>
+                                    </mat-form-field>
+      
+                                    <mat-form-field class="w-100">
+                                        <mat-select placeholder="Cuenta Origen" formControlName="cuenta">
+                                          <mat-option *ngFor="let cuenta of db_cuenta" [value]="cuenta | json"> 
+                                            {{cuenta.banco}}
+                                          </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+      
+                                    <mat-form-field class="w-100">
+                                        <mat-select placeholder="Medio de Pago" formControlName="medioPago">
+                                          <mat-option *ngFor="let medio of db_medio_pago" [value]="medio | json">                                        
+                                            {{medio.descripcionMedioPago}}
+                                          </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+      
+                                    <mat-form-field class="w-100">
+                                        <input type="number" matInput placeholder="Importe" formControlName="montoIngresado">
+                                    </mat-form-field>                                                          
+                                    
+                                    <mat-form-field class="w-100">
+                                        <textarea matInput placeholder="Escriba las especificiones" formControlName="detalles"></textarea>
+                                    </mat-form-field>      
                                   </div>
-        
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Cuenta Destino</label>
-                                    <div class="col-10">
-                                      <select class="form-control" formControlName="cuenta">
-                                        <option *ngFor="let cuenta of db_cuenta" [value]="cuenta | json">{{cuenta.banco}}</option>
-                                      </select>
-                                    </div>
-                                  </div>
-        
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Medio de ingreso</label>
-                                    <div class="col-10">                                                          
-                                      <select class="form-control" formControlName="medioPago">
-                                          <option *ngFor="let medio of db_medio_pago" [value]="medio | json">{{medio.descripcionMedioPago}}</option>
-                                      </select>
-                                    </div>
-                                  </div>
-        
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Importe</label>
-                                    <div class="col-10">
-                                      <input class="form-control" formControlName="montoIngresado" type="text">                              
-                                    </div>
-                                  </div>                                  
-        
-                                  <div class="form-group row">
-                                    <label for="idarea-input" class="col-2 col-form-label">Especificiones</label>
-                                    <div class="col-10">
-                                      <textarea class="form-control"  formControlName="detalles" name="" id="" cols="60" rows="2"></textarea>
-                                    </div>
-                                  </div>                                                 
-                                </form>
-                         
-                            <!-- <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">ID</label>
-                            <div class="col-10">
-                              <input class="form-control" type="text" id="idarea-input">
-                            </div>
-                          </div>
-                         
-                          <div class="form-group row">
-                            <label for="descriarea-input" class="col-2 col-form-label">Usuario</label>
-                            <div class="col-10">
-                              <input class="form-control" type="text" id="descriarea-input">
-                            </div>
-                          </div>
-
-                          <div class="form-group row">
-                                <label for="descriarea-input" class="col-2 col-form-label">Fecha de Ingreso</label>
-                                <div class="col-10">
-                                  <input class="form-control" type="date" id="descriarea-input">
-                                </div>
-                              </div>
-
-                              <div class="form-group row">
-                                    <label for="descriarea-input" class="col-2 col-form-label">Hora de Ingreso</label>
-                                    <div class="col-10">
-                                      <input class="form-control" type="datetime-local" id="descriarea-input">
-                                    </div>
-                                  </div>
-
-                                  <div class="form-group row">
-                                        <label for="descriarea-input" class="col-2 col-form-label">Monto</label>
-                                        <div class="col-10">
-                                          <input class="form-control" type="text" id="descriarea-input">
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group row">
-                                            <label for="descriarea-input" class="col-2 col-form-label">Sucursal</label>
-                                            <div class="col-10">
-                                           
-                                                            <select class="form-control">
-                                                                <option>Moyobamba</option>
-                                                                <option>Tarapoto</option>
-                                                                <option>Bagua</option>
-                                                                <option>Soritor</option>
-                                                            </select>
-                                                   
-                                            </div>
-                                          </div>
-
-                                          <div class="form-group row">
-                                                <label for="descriarea-input" class="col-2 col-form-label">Cuenta Bancaria</label>
-                                                <div class="col-10">
-                                                        <select class="form-control">
-                                                                <option>Banco de la Nacion</option>
-                                                                <option>Banco Continental</option>
-                                                                <option>Banco de Credito</option>
-                                                            </select>
-                                                </div>
-                                              </div>
-
-                                              <div class="form-group row">
-                                                    <label for="descriarea-input" class="col-2 col-form-label">Tipo de Pago</label>
-                                                    <div class="col-10">
-                                                            <select class="form-control">
-                                                                    <option>Efectivo</option>
-                                                                    <option>Cheque</option>
-                                                                    <option>Contado</option>
-                                                                </select>
-                                                    </div>
-                                                  </div>
-
-                                                  <div class="form-group row">
-                                                        <label for="descriarea-input" class="col-2 col-form-label">Motivo Ingreso</label>
-                                                        <div class="col-10">
-                                                                <select class="form-control">
-                                                                        <option>Pago de Serivicos de Agua</option>
-                                                                        <option>Pago al Personal</option>
-                                                                        <option>Compra de materiales</option>
-                                                                    </select>
-                                                        </div>
-                                                      </div> -->
-
+      
+                                </div>                          
+                              </form>
+                     
                           <hr>
                           <button type="button" class="btn btn-success" (click)="guardarCambios()">Guardar</button>
                           <button type="button" class="btn btn-danger">Cancelar</button>

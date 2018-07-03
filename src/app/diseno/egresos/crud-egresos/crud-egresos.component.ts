@@ -53,13 +53,13 @@ export class CrudEgresosComponent implements OnInit {
   prepararFormulario() {
     this.form = this.formBuilder.group({      
       imagen:'',
-      monto:150.0,
-      conceptoEgreso:this.db_concepto_egreso,
-      cuenta:this.db_cuenta_origen,
-      medioPago:this.MedioPago_model,      
-      fecha: null,
-      sucursal:null,
-      usuario: this.usuarioModel.nombreApellido,      
+      monto:[ 0, Validators.required ],
+      conceptoEgreso:[this.db_concepto_egreso, Validators.required], // no guarda ver
+      cuenta:[this.db_cuenta_origen, Validators.required],
+      medioPago:[this.MedioPago_model, Validators.required],      
+      fecha: [null, Validators.required],
+      sucursal:[null, Validators.required],
+      usuario: [this.usuarioModel.nombreApellido, Validators.required],
       detalles: '',
       idEgreso:0
     });

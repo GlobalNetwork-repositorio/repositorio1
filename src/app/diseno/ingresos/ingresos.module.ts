@@ -9,9 +9,14 @@ import { PageHeaderModule } from '../../shared';
 import { ListaIngresosComponent } from './lista-ingresos/lista-ingresos.component';
 import { CrudIngresosComponent } from './crud-ingresos/crud-ingresos.component';
 
+import { DataTableModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
+
+import { MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule } from '../materialize/materialize.index';
 
 @NgModule({
-    imports: [CommonModule, IngresosRoutingModule, PageHeaderModule, FormsModule, ReactiveFormsModule, NgSelectModule],
+    imports: [CommonModule, IngresosRoutingModule, PageHeaderModule, FormsModule, ReactiveFormsModule, NgSelectModule, DataTableModule, TableModule
+        ,MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule],
     declarations: [ListaIngresosComponent, CrudIngresosComponent]
 })
 export class IngresosModule { }
