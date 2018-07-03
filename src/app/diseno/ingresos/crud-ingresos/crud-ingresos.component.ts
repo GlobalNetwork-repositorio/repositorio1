@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { CrudService } from '../../services/service.index';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IngresosModule } from '../ingresos.module';
 import { Usuario } from '../../usuarios/usuario.model';
 import { Ingreso } from '../ingreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
+import swal from 'sweetalert2';
+import { MSJ_SUCCESS } from '../../../config/config';
 
 
 @Component({
@@ -46,17 +48,18 @@ export class CrudIngresosComponent implements OnInit {
         idIngreso: 0,
         fecha: '',
         hora: '',
-        montoIngresado: 0.00,
-        conceptoIngreso: this.db_concepto_ingreso,
-        cuenta: this.db_cuenta,
-        medioPago: this.db_medio_pago,        
-        sucursal:this.usuarioModel.sucursal,
-        usuario: this.usuarioModel,      
+        montoIngresado: ['0.00', Validators.required],
+        conceptoIngreso: [this.db_concepto_ingreso, Validators.required],
+        cuenta: [this.db_cuenta, Validators.required],
+        medioPago: [this.db_medio_pago, Validators.required],        
+        sucursal:[this.usuarioModel.sucursal, Validators.required],
+        usuario: [this.usuarioModel, Validators.required],      
         detalles: ''          
     });
   }
 
   guardarCambios() {
+    if ( !this.form.valid ) { return; }
     this.form.value.fecha = Date.parse(this.form.value.fecha);
     this.form.value.cuenta = JSON.parse(this.form.value.cuenta);
     this.form.value.medioPago = JSON.parse(this.form.value.medioPago);
@@ -66,6 +69,7 @@ export class CrudIngresosComponent implements OnInit {
     this.crudService.create(Ingreso_model, 'ingreso', 'save').subscribe( res => {
       console.log(res);      
       this.prepararFormulario();
+      swal(MSJ_SUCCESS);
     })
   }
 

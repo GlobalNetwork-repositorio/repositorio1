@@ -14,19 +14,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 // AoT requires an exported function for factories
 
-
 @NgModule({
     imports: [
         BsDropdownModule.forRoot(),
         CommonModule,
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
         BrowserAnimationsModule,
-        HttpClientModule,        
+        FormsModule,        
+        ReactiveFormsModule,
+        HttpClientModule,     
         AppRoutingModule,
-        SharedModule
-     
+        SharedModule     
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

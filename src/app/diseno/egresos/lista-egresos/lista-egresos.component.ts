@@ -7,18 +7,22 @@ import { EgresosService } from '../egresos.service';
 
 @Component({
   selector: 'app-lista-egresos',
-  templateUrl: './lista-egresos.component.html',
+  templateUrl: './lista-egresos.component.html',  
   animations: [routerTransition()]
 })
 export class ListaEgresosComponent implements OnInit {
 
   egresoSModel: Egreso[];
   db_egresos: any;
+  ShowBuqueda: boolean = false;
+  showChild: boolean = false;
   constructor(private crudService: CrudService, private egresoService: EgresosService) { }
 
   ngOnInit() {
     this.getAll();
   }  
+
+  ShowChild() { this.showChild = !this.showChild }
 
   getAll() {
     this.crudService.getAll('egreso','getall').subscribe(res => {      
@@ -30,17 +34,9 @@ export class ListaEgresosComponent implements OnInit {
 
   buscar(parametro: string) {
     this.db_egresos = this.egresoService.buscar(this.egresoSModel, parametro);
-    
-
-    // this.db_egresos = this.egresoSModel
-    //         .reduce((x,y) => {              
-    //           // const cadena = `${x.conceptoEgreso.descripcion} 
-    //           //   ${x.fecha} ${x.medioPago.descripcionMedioPago} ${x.monto}
-    //           //   ${x.cuenta.banco}`.toLocaleLowerCase()              
-    //           return x.
-    //           // return cadena.indexOf(parametro.toLocaleLowerCase()) !== -1 ? x : null;
-    //         });
-    // console.log(this.db_egresos);
   }
+
+  onDeactivate() { this.ShowChild(); }
+  onActivate() { this.showChild = true; }
 
 }

@@ -8,6 +8,8 @@ import { MedioPago } from '../../tipopago/medio.pago.model';
 import { conceptoEgreso } from '../../categresos/concepto.egreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
 import { Usuario } from '../../usuarios/usuario.model';
+import swal from 'sweetalert2';
+import { MSJ_SUCCESS } from '../../../config/config';
 
 
 @Component({
@@ -20,14 +22,15 @@ export class CrudEgresosComponent implements OnInit {
   db_cuenta_origen: any;
   db_medio_pago: any;
   db_concepto_egreso:any;
+  db_sucursal: any;
 
   
   Egreso_model: Egreso;
   usuarioModel: Usuario;
-  Cuenta_model: Cuenta;
+  Cuenta_model: Cuenta;  
   // MedioPago_model: MedioPago;
   MedioPago_model: any;
-  ConceptoEgreso_model: conceptoEgreso;
+  ConceptoEgreso_model: conceptoEgreso;  
 
   form: FormGroup;
   date: Date = new Date();
@@ -42,6 +45,7 @@ export class CrudEgresosComponent implements OnInit {
     this.crudService.getAll('mediopago', 'getall').subscribe( res => this.MedioPago_model = res );
     this.crudService.getAll('cuenta', 'getall').subscribe( res => {this.db_cuenta_origen = res;});    
     this.crudService.getAll('conceptoegreso', 'getall').subscribe( res => this.db_concepto_egreso = res);
+    this.crudService.getAll('sucursal', 'getall').subscribe( res => this.db_sucursal = res);
     this.usuarioModel = this.usuarioService.getUsuario();    
     this.prepararFormulario();
   }
@@ -68,6 +72,7 @@ export class CrudEgresosComponent implements OnInit {
   guardarCambios() {        
     // console.log('egreso model ', this.Egreso_model);    
     this.form.value.fecha = Date.parse(this.form.value.fecha);
+    this.form.value.sucursal = JSON.parse(this.form.value.sucursal)
     this.form.value.cuenta = JSON.parse(this.form.value.cuenta)
     this.form.value.medioPago = JSON.parse(this.form.value.medioPago)
     this.form.value.usuario = this.usuarioModel;
@@ -80,14 +85,9 @@ export class CrudEgresosComponent implements OnInit {
 
     this.crudService.create(this.Egreso_model,'egreso','save').subscribe( res => {
       console.log('servidor', res);
-      this.prepararFormulario();
+      this.prepararFormulario();      
+      swal(MSJ_SUCCESS);
    });
-
-    // this.egresoService.grabar(this.Egreso_model).subscribe( res => {
-    //    console.log('servidor', res);
-    //    this.prepararFormulario();
-    // });
-    
     
   }
 

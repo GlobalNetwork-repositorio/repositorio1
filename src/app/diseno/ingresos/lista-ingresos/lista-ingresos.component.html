@@ -13,6 +13,18 @@
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Busqueda" #txtbusqueda (keyup)="buscar(txtbusqueda.value)">
+                        <ng-select [items]="filtros"
+                                [addTag]="true"
+                                [multiple]="true"
+                                [isOpen]="false">
+                        </ng-select>
+                        <!-- <ng-select [items]="filtros"
+                                [addTag]="true"
+                                [hideSelected]="true"
+                                multiple="true"
+                                bindLabel="filtro">
+                        </ng-select>
+                        {{filtros | json}} -->
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                     </form>
                 </div>
@@ -40,7 +52,7 @@
                                 <ng-container *ngFor="let item of db_ingreso; let i = index">
                                 <tr *ngIf="item">
                                     <th scope="row">1</th>            
-                                    <td>{{item.fecha | date:'mediumDate'}}</td>
+                                    <td>{{item.fecha | date:'dd/MM/yyyy'}}</td>
                                     <td>{{item.montoIngresado | number:'0.2'}}</td>
                                     <td>{{item.sucursal.descripcion}}</td>      
                                     <td>{{item.cuenta.banco}}</td>                                                                  

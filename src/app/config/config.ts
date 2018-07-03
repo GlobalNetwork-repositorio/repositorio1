@@ -1,1 +1,2 @@
 export const URL_SERVICIOS = 'http://localhost:8080/sigo';
+export const MSJ_SUCCESS: any = { position: 'top-end',type: 'success', title: 'Se guardo correctamente.', showConfirmButton: false, timer: 1000 };

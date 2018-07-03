@@ -1,4 +1,4 @@
-<div [@routerTransition]>
+ <div [@routerTransition] [hidden]="this.showChild">
     <app-page-header [heading]="'Egresos'" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
         <div class="row">
@@ -6,22 +6,37 @@
                 <div class="nav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <button type="button" class="btn btn-success" [routerLink]="['/egresos/crud-egresos']" [routerLinkActive]="['router-link-active']"
-                                (click)="onLoggedin()">Crear Egreso</button>
-                            <button type="button" class="btn btn-outline-primary">Descargar</button>
+                            <!-- <button type="button" class="btn btn-success btn-sm" [routerLink]="['/egresos/crud-egresos']" [routerLinkActive]="['router-link-active']"
+                                (click)="onLoggedin()">Crear Egreso</button> -->
+                            <!-- <button type="button" class="btn btn-outline-primary btn-sm">Descargar</button> -->
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
+                    <!-- <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Busqueda" #txtbusqueda (keyup)="buscar(txtbusqueda.value)">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
+                    </form> -->
                 </div>
-                <hr>
+                <!-- <hr> -->
                 <div class="card mb-3">
                     <div class="card-header">
-                        Historial Egresos
+                        Historial Egresos <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
+                        <div class="float-right">
+                                <button type="button" class="btn btn-success btn-sm" [routerLink]="['./crud-egresos']"
+                                (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Crear Egreso</button>
+                        </div>
                     </div>
-                    <div class="card-body table-responsive">
+
+                    <p-dataTable class="f-12" [value]="db_egresos" [filterDelay]=500 [lazy]="true" 
+                        (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
+                        <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
+                        <p-column field="monto"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
+                        <p-column field="sucursal.descripcion" [style]="{'width':'150px'}" header="Sucursal" [filter]="ShowBuqueda"></p-column>
+                        <p-column field="cuenta.banco"  header="Banco" [filter]="ShowBuqueda"></p-column>
+                        <p-column field="conceptoEgreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>
+                        <p-column field="medioPago.descripcionMedioPago" [style]="{'width':'120px'}"  header="medio" [filter]="ShowBuqueda"></p-column>
+                    </p-dataTable>
+
+                    <!-- <div class="card-body table-responsive">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -40,7 +55,7 @@
                                 <ng-container *ngFor="let item of db_egresos; let i = index">
                                 <tr *ngIf="item">                                    
                                     <th scope="row">{{i+1}}</th>                                    
-                                    <td>{{item.fecha | date:'mediumDate'}}</td>
+                                    <td>{{item.fecha | date:'dd/MM/yyyy'}}</td>
                                     <td>{{item.monto | number:'0.2'}}</td>
                                     <td>{{item.sucursal.descripcion}}</td>      
                                     <td>{{item.cuenta.banco}}</td>                                                                  
@@ -55,17 +70,18 @@
                                         <button type="button" class="btn btn-outline-success">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </button>
+                                    </td>
                                 </tr>
                                 </ng-container>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <router-outlet></router-outlet>
+<div class="container" >    
+    <router-outlet (activate)='onActivate()' (deactivate)='onDeactivate()'></router-outlet>
 </div>

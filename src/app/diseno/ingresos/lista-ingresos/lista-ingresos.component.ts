@@ -13,6 +13,7 @@ export class ListaIngresosComponent implements OnInit {
 
   ingresoSModel: Ingreso[];
   db_ingreso: any;
+  filtros: any = [{filtro: '', tag: true}];
   constructor(private crudService: CrudService, private ingresoService: IngresosService) { }
 
   ngOnInit() {
@@ -20,7 +21,7 @@ export class ListaIngresosComponent implements OnInit {
   }
 
   getAll(){
-    this.crudService.getAll('ingreso','getall').subscribe(res => {      
+    this.crudService.getAll('ingreso','getall').subscribe(res => {
       this.db_ingreso = res;
       this.ingresoSModel = <Ingreso[]> res;
       console.log('ingresos', this.ingresoSModel);

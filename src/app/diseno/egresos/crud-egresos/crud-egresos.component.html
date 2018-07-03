@@ -1,4 +1,3 @@
-
         <div [@routerTransition]>
                 <app-page-header [heading]="'Egresos'" [icon]="'fa-desktop'"></app-page-header>
                 <div [@routerTransition]>
@@ -10,30 +9,94 @@
                       <div class="card mb-3">
                         <div class="card-header">
                           Nuevo Egreso
+                          <div class="float-right">
+                              <button type="button" [routerLink]="['../']" class="btn btn-success btn-sm">
+                                Atras</button>
+                          </div>
                         </div>
                         <div class="card-header">
-                      <form [formGroup]="form">                        
-                        <br><br>
-                          <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Usuario</label>
-                            <div class="col-10">
-                              <input formControlName="usuario" class="form-control" type="text" id="idarea-input" value="Juan Perez" readonly>
+                                                    
+                      <form [formGroup]="form">
+                          <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Usuario" formControlName="usuario" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Sucursal" formControlName="sucursal">
+                                      <mat-option *ngFor="let sucursal of db_sucursal" [value]="sucursal | json">
+                                        {{sucursal.descripcion}}
+                                      </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>                                
+                            </div>
+                            
+                            <div class="col-md-8">
+
+                              <mat-form-field class="w-100">
+                                <input matInput placeholder="Motivo" aria-label="Sucursal" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let concepto of db_concepto_egreso" [value]="concepto.descripcion">
+                                    <span>{{concepto.descripcion}}</span>
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+
+                              <mat-form-field class="w-100">
+                                  <mat-select placeholder="Cuenta Origen" formControlName="cuenta">
+                                    <mat-option *ngFor="let cuenta of db_cuenta_origen" [value]="cuenta | json">                                        
+                                      {{cuenta.banco}}
+                                    </mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+
+                              <mat-form-field class="w-100">
+                                  <mat-select placeholder="Medio de Pago" formControlName="medioPago">
+                                    <mat-option *ngFor="let medio of MedioPago_model" [value]="medio | json">                                        
+                                      {{medio.descripcionMedioPago}}
+                                    </mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+
+                              <mat-form-field class="w-100">
+                                  <input type="number" matInput placeholder="Importe" formControlName="monto">
+                              </mat-form-field>
+
+                              <mat-form-field class="w-100">
+                                  <input  matInput placeholder="Archivo Adjunto" formControlName="imagen">
+                              </mat-form-field>
+
+                              <mat-form-field class="w-100">
+                                  <textarea matInput placeholder="Escriba las especificiones" formControlName="detalles"></textarea>
+                              </mat-form-field>
+
+                            </div>
+
+                          </div>                          
+                          <!-- <div class="form-group row">
+                            <label for="idarea-input" class="col-4 col-form-label">Usuario</label>
+                            <div class="col-8">
+                              <input formControlName="usuario" class="form-control form-control-sm" type="text" id="idarea-input" value="Juan Perez" readonly>
                             </div>
                           </div>
                           
                           <div class="form-group row">
-                              <label for="idarea-input" class="col-2 col-form-label">Fecha de egreso</label>
-                              <div class="col-10">
-                                <input type="date" class="form-control" formControlName="fecha"  name="" id="">                                
+                              <label for="idarea-input" class="col-4 col-form-label">Fecha de egreso</label>
+                              <div class="col-8">
+                                <input type="date" class="form-control form-control-sm" formControlName="fecha"  name="" id="">                                
                               </div>
                             </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Motivo</label>
-                            <div class="col-10">
-                                <!-- <select class="form-control" formControlName="conceptoEgreso">
-                                    <option *ngFor="let concepto of db_concepto_egreso" [value]="concepto.idConceptoEgreso">{{concepto.descripcion}}</option>
-                                </select> -->
+                            <label for="idarea-input" class="col-4 col-form-label">Motivo</label>
+                            <div class="col-8">
                                 <ng-select formControlName="conceptoEgreso" class="custom" [items]="db_concepto_egreso"
                                     [addTag]="false"
                                     addTagText="Agregar Concepto"                                    
@@ -45,47 +108,47 @@
                           </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Cuenta Origen</label>
-                            <div class="col-10">
-                              <select class="form-control" formControlName="cuenta">
+                            <label for="idarea-input" class="col-4 col-form-label">Cuenta Origen</label>
+                            <div class="col-8">
+                              <select class="form-control form-control-sm" formControlName="cuenta">
                                 <option *ngFor="let cuenta of db_cuenta_origen" [value]="cuenta | json">{{cuenta.banco}}</option>
                               </select>
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Medio Pago AA</label>
-                            <div class="col-10">                                                          
-                              <select class="form-control" formControlName="medioPago">
+                            <label for="idarea-input" class="col-4 col-form-label">Medio Pago AA</label>
+                            <div class="col-8">                                                          
+                              <select class="form-control form-control-sm" formControlName="medioPago">
                                   <option *ngFor="let medio of MedioPago_model" [value]="medio | json">{{medio.descripcionMedioPago}}</option>
                               </select>
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Importe</label>
-                            <div class="col-10">
-                              <input class="form-control" formControlName="monto" type="text" id="idarea-input">                              
+                            <label for="idarea-input" class="col-4 col-form-label">Importe</label>
+                            <div class="col-8">
+                              <input class="form-control form-control-sm" formControlName="monto" type="text" id="idarea-input">                              
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Documento Adjunto</label>
-                            <div class="col-10">
-                              <input class="form-control" formControlName="imagen" type="file" id="idarea-input">
+                            <label for="idarea-input" class="col-4 col-form-label">Documento Adjunto</label>
+                            <div class="col-8">
+                              <input class="form-control form-control-sm" formControlName="imagen" type="file" id="idarea-input">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Especificiones</label>
-                            <div class="col-10">
-                              <textarea class="form-control"  formControlName="detalles" name="" id="" cols="60" rows="2"></textarea>
+                            <label for="idarea-input" class="col-4 col-form-label">Especificiones</label>
+                            <div class="col-8">
+                              <textarea class="form-control form-control-sm"  formControlName="detalles" name="" id="" cols="60" rows="2"></textarea>
                             </div>
-                          </div>                                                 
+                          </div>                                                  -->
                         </form>
                           <!-- <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">Importe</label>
-                            <div class="col-10">
+                            <label for="idarea-input" class="col-4 col-form-label">Importe</label>
+                            <div class="col-8">
                               <input class="form-control" type="text" id="idarea-input">
                             </div>
                           </div>
@@ -93,43 +156,43 @@
                           
 
                             <div class="form-group row">
-                            <label for="idarea-input" class="col-2 col-form-label">ID</label>
-                            <div class="col-10">
+                            <label for="idarea-input" class="col-4 col-form-label">ID</label>
+                            <div class="col-8">
                               <input class="form-control" type="text" id="idarea-input">
                             </div>
                           </div>
                          
                           <div class="form-group row">
-                            <label for="descriarea-input" class="col-2 col-form-label">Usuario</label>
-                            <div class="col-10">
+                            <label for="descriarea-input" class="col-4 col-form-label">Usuario</label>
+                            <div class="col-8">
                               <input class="form-control" type="text" id="descriarea-input">
                             </div>
                           </div>
 
                           <div class="form-group row">
-                                <label for="descriarea-input" class="col-2 col-form-label">Fecha de Egreso</label>
-                                <div class="col-10">
+                                <label for="descriarea-input" class="col-4 col-form-label">Fecha de Egreso</label>
+                                <div class="col-8">
                                   <input class="form-control" type="date" id="descriarea-input">
                                 </div>
                               </div>
 
                               <div class="form-group row">
-                                    <label for="descriarea-input" class="col-2 col-form-label">Hora de Egreso</label>
-                                    <div class="col-10">
+                                    <label for="descriarea-input" class="col-4 col-form-label">Hora de Egreso</label>
+                                    <div class="col-8">
                                       <input class="form-control" type="datetime-local" id="descriarea-input">
                                     </div>
                                   </div>
 
                                   <div class="form-group row">
-                                        <label for="descriarea-input" class="col-2 col-form-label">Monto</label>
-                                        <div class="col-10">
+                                        <label for="descriarea-input" class="col-4 col-form-label">Monto</label>
+                                        <div class="col-8">
                                           <input class="form-control" type="number" id="descriarea-input">
                                         </div>
                                       </div>
 
                                       <div class="form-group row">
-                                            <label for="descriarea-input" class="col-2 col-form-label">Sucursal</label>
-                                            <div class="col-10">
+                                            <label for="descriarea-input" class="col-4 col-form-label">Sucursal</label>
+                                            <div class="col-8">
                                            
                                                             <select class="form-control">
                                                                 <option>Moyobamba</option>
@@ -142,8 +205,8 @@
                                           </div>
 
                                           <div class="form-group row">
-                                                <label for="descriarea-input" class="col-2 col-form-label">Cuenta Bancaria</label>
-                                                <div class="col-10">
+                                                <label for="descriarea-input" class="col-4 col-form-label">Cuenta Bancaria</label>
+                                                <div class="col-8">
                                                         <select class="form-control">
                                                                 <option>Banco de la Nacion</option>
                                                                 <option>Banco Continental</option>
@@ -153,8 +216,8 @@
                                               </div>
 
                                               <div class="form-group row">
-                                                    <label for="descriarea-input" class="col-2 col-form-label">Tipo de Pago</label>
-                                                    <div class="col-10">
+                                                    <label for="descriarea-input" class="col-4 col-form-label">Tipo de Pago</label>
+                                                    <div class="col-8">
                                                             <select class="form-control">
                                                                     <option>Efectivo</option>
                                                                     <option>Cheque</option>
@@ -164,8 +227,8 @@
                                                   </div>
 
                                                   <div class="form-group row">
-                                                        <label for="descriarea-input" class="col-2 col-form-label">Motivo Egreso</label>
-                                                        <div class="col-10">
+                                                        <label for="descriarea-input" class="col-4 col-form-label">Motivo Egreso</label>
+                                                        <div class="col-8">
                                                                 <select class="form-control">
                                                                         <option>Pago de Serivicos de Agua</option>
                                                                         <option>Pago al Personal</option>
