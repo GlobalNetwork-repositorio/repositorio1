@@ -16,8 +16,7 @@ import { TableModule } from 'primeng/table';
 import { MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule } from '../materialize/materialize.index';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, EgresosRoutingModule,PageHeaderModule, NgSelectModule, DataTableModule, TableModule,
-        MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, EgresosRoutingModule,PageHeaderModule, NgSelectModule, DataTableModule, TableModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule],
     declarations: [ListaEgresosComponent, CrudEgresosComponent]
 })
 export class EgresosModule { }

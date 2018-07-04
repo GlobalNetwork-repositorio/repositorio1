@@ -15,7 +15,7 @@
                             <p-dataTable class="f-12" [value]="db_ingreso" [filterDelay]=500 [lazy]="true" 
                                 (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
                                 <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
-                                <p-column field="monto"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
+                                <p-column field="montoIngresado"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="sucursal.descripcion" [style]="{'width':'150px'}" header="Sucursal" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="cuenta.banco"  header="Banco" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="conceptoIngreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>

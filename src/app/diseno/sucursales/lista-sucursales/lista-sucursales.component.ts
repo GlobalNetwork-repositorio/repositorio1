@@ -22,7 +22,7 @@ export class ListaSucursalesComponent implements OnInit {
     this.crudService.getAll('sucursal','getall').subscribe(res => this.db_sucursal = res);
   }
 
-  ShowChild() { this.showChild = this.showChild; } 
+  ShowChild() { this.showChild = true; } 
   onActivateChild() { this.showChild = true; }
   onDeactivateChild() { this.showChild = false; }
 
