@@ -37,9 +37,10 @@
                             
                             <div class="col-md-8">
 
+                               <!-- [displayWith]="displayFnAutoComplete" -->
                               <mat-form-field class="w-100">
-                                <input matInput placeholder="Motivo" [matAutocomplete]="auto" formControlName="conceptoEgreso">
-                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <input matInput placeholder="Motivo" [matAutocomplete]="auto" formControlName="conceptoEgreso" appCtrlAutocomplete [data]="db_concepto_egreso" etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltrados($event)">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnAutoComplete">
                                   <mat-option *ngFor="let concepto of db_concepto_egreso_filter" [value]="concepto">
                                     <span>{{concepto.descripcion}}</span>
                                   </mat-option>

@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { CrudService } from '../../services/service.index';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IngresosModule } from '../ingresos.module';
 import { Usuario } from '../../usuarios/usuario.model';
 import { Ingreso } from '../ingreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
-import { debounceTime, startWith, map } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { MSJ_SUCCESS } from '../../../config/config';
-import { Observable } from 'rxjs';
-import { conceptoIngreso } from '../../catingresos/concepto.ingreso.model';
+
 
 
 @Component({
@@ -39,27 +36,11 @@ export class CrudIngresosComponent implements OnInit {
     this.obtenerMaestros();       
   }
 
-  ngAfterViewInit() {
-    // buscar en motivo, concepto de ingreso es un autcomplete
-    // captura cambios en el control y los mapea por descripcion y busca sus conicidencias // muestra solo los primeros 5 resultados        
-    this.form.controls.conceptoIngreso.valueChanges
-      .pipe( debounceTime(200), map(value => typeof value === 'string' ? value : value.descripcion))
-      .subscribe((val: string) => {
-        val = val.toLocaleLowerCase();
-        this.concepto_ingreso_filter = this.db_concepto_ingreso.filter((x: any) => x.descripcion.toLocaleLowerCase().indexOf(val) !== -1).slice(0, 5)
-      });
-  }
-  
+  setAutoCompleteDatosFiltrados(event: any): void { this.concepto_ingreso_filter = event; }
   // muestra en el input la descripcion del objeto Concepto se utiliza con [displayWith]="displayFn" en mat-autocomplete // sino obtendriamos [Object, Object]
-  displayFn(concepto?: any): string | undefined { return concepto ? concepto.descripcion : undefined;}
-  
-  
-  // valida lo escrito en el autocomplete, si no selecciona ningun opcion de la lista
-  // devuelve string que no es valido.
-  private autocompleteSelectionValidator(control: FormControl) {
-    return typeof control.value === 'string' ? { incorrect: {} } : null
-  }
-
+  displayFnAutoComplete(concepto?: any): string | undefined { return concepto ? concepto.descripcion : undefined; }
+  // Validators.required // valida lo escrito en el autocomplete, si no selecciona ningun opcion de la lista // devuelve string que no es valido.
+  private autocompleteSelectionValidator(control: FormControl) { return typeof control.value === 'string' ? { incorrect: {} } : null }
 
   obtenerMaestros() {
     this.crudService.getAll('conceptoingreso', 'getall').subscribe(res => { this.db_concepto_ingreso = res; this.concepto_ingreso_filter=res;});
@@ -90,7 +71,6 @@ export class CrudIngresosComponent implements OnInit {
   guardarCambios() {
     if (!this.form.valid || this.procesando) { return; }    
     this.procesando = true;
-
 
     this.form.value.fecha = Date.parse(this.form.value.fecha);
     this.form.value.usuario = this.usuarioModel;    

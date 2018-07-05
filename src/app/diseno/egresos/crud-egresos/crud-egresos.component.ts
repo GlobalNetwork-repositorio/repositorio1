@@ -3,14 +3,11 @@ import { routerTransition } from '../../../router.animations';
 import { CrudService } from '../../services/service.index';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Egreso } from '../../egresos/egreso.model';
-import { Cuenta } from '../../cuentabancaria/cuenta.model';
-import { MedioPago } from '../../tipopago/medio.pago.model';
 import { conceptoEgreso } from '../../categresos/concepto.egreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
 import { Usuario } from '../../usuarios/usuario.model';
 import swal from 'sweetalert2';
 import { MSJ_SUCCESS } from '../../../config/config';
-import { debounceTime, map } from 'rxjs/operators';
 
 
 @Component({
@@ -29,7 +26,6 @@ export class CrudEgresosComponent implements OnInit {
   
   Egreso_model: Egreso;
   usuarioModel: Usuario;   
-  // MedioPago_model: MedioPago;
   MedioPago_model: any;
   ConceptoEgreso_model: conceptoEgreso;  
 
@@ -51,27 +47,14 @@ export class CrudEgresosComponent implements OnInit {
     this.prepararFormulario();
   }
 
-  ngAfterViewInit() {
-    // buscar en motivo, concepto de ingreso es un autcomplete
-    // captura cambios en el control y los mapea por descripcion y busca sus conicidencias // muestra solo los primeros 5 resultados        
-    this.form.controls.conceptoEgreso.valueChanges
-      .pipe(debounceTime(200), map(value => typeof value === 'string' ? value : value.descripcion))
-      .subscribe((val: string) => {
-        val = val.toLocaleLowerCase();
-        this.db_concepto_egreso_filter = this.db_concepto_egreso.filter((x: any) => x.descripcion.toLocaleLowerCase().indexOf(val) !== -1).slice(0, 5)
-      });
-  }
-  
+  setAutoCompleteDatosFiltrados( event: any ): void { this.db_concepto_egreso_filter = event; }
   // muestra en el input la descripcion del objeto Concepto se utiliza con [displayWith]="displayFn" en mat-autocomplete // sino obtendriamos [Object, Object]
-  displayFn(concepto?: any): string | undefined { return concepto ? concepto.descripcion : undefined; }
-
-
-  // valida lo escrito en el autocomplete, si no selecciona ningun opcion de la lista
-  // devuelve string que no es valido.
-  private autocompleteSelectionValidator(control: FormControl) {
-    return typeof control.value === 'string' ? { incorrect: {} } : null
-  }
-  prepararFormulario() {
+  displayFnAutoComplete(concepto?: any): string | undefined { return concepto ? concepto.descripcion : undefined; }
+  // Validators.required // valida lo escrito en el autocomplete, si no selecciona ningun opcion de la lista // devuelve string que no es valido.
+  private autocompleteSelectionValidator(control: FormControl) {return typeof control.value === 'string' ? { incorrect: {} } : null }
+    
+  
+  private prepararFormulario(): void {
     this.form = this.formBuilder.group({      
       imagen:'',
       monto:[ '', Validators.required ],
@@ -87,17 +70,12 @@ export class CrudEgresosComponent implements OnInit {
   }
 
   guardarCambios() {        
-    // console.log('egreso model ', this.Egreso_model);   
     if (!this.form.valid || this.procesando) { return; }
     this.procesando = true;
 
     this.form.value.fecha = Date.parse(this.form.value.fecha);
     this.form.value.usuario = this.usuarioModel;
-    // this.form.value.sucursal = JSON.parse(this.form.value.sucursal)
-    // this.form.value.cuenta = JSON.parse(this.form.value.cuenta)
-    // this.form.value.medioPago = JSON.parse(this.form.value.medioPago)
-    // this.form.value.sucursal = this.usuarioModel.sucursal;
-
+  
     this.Egreso_model = <Egreso> this.form.value;
     console.log(JSON.stringify(this.form.value));
     console.log(this.form.value);
