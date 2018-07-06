@@ -14,6 +14,8 @@ import { DataTableModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 
 import { MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule } from '../materialize/materialize.index';
+// import { ServiceModule } from '../services/service.module';
+// import { DisenoModule } from '../diseno.module';
 import { CtrlAutocompleteDirective } from '../../directivas/ctrl-autocomplete.directive';
 
 @NgModule({

@@ -12,6 +12,9 @@ import { AuthGuard } from './shared';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+
+// directiva
+// import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';
 // import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';
 // AoT requires an exported function for factories
 

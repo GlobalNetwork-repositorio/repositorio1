@@ -7,13 +7,14 @@ import { Ingreso } from '../ingreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
 import swal from 'sweetalert2';
 import { MSJ_SUCCESS } from '../../../config/config';
+import { CtrlAutocompleteDirective } from '../../../directivas/ctrl-autocomplete.directive';
 
 
 
 @Component({
   selector: 'app-crud-ingresos',
   templateUrl: './crud-ingresos.component.html',
-  animations: [routerTransition()]
+  animations: [routerTransition()]  
 })
 export class CrudIngresosComponent implements OnInit {
    usuarioModel: Usuario = null;
@@ -42,7 +43,7 @@ export class CrudIngresosComponent implements OnInit {
   // Validators.required // valida lo escrito en el autocomplete, si no selecciona ningun opcion de la lista // devuelve string que no es valido.
   private autocompleteSelectionValidator(control: FormControl) { return typeof control.value === 'string' ? { incorrect: {} } : null }
 
-  obtenerMaestros() {
+  private obtenerMaestros(): void {
     this.crudService.getAll('conceptoingreso', 'getall').subscribe(res => { this.db_concepto_ingreso = res; this.concepto_ingreso_filter=res;});
     this.crudService.getAll('cuenta', 'getall').subscribe(res => this.db_cuenta = res);      
     this.crudService.getAll('mediopago', 'getall').subscribe(res => this.db_medio_pago = res);
@@ -52,7 +53,7 @@ export class CrudIngresosComponent implements OnInit {
     this.prepararFormulario();
   }
 
-  prepararFormulario() {
+  private prepararFormulario(): void {
     this.concepto_ingreso_filter = this.db_concepto_ingreso;
     this.form = this.formBuilder.group({      
         idIngreso: 0,
@@ -68,7 +69,7 @@ export class CrudIngresosComponent implements OnInit {
     });
   }
 
-  guardarCambios() {
+  guardarCambios(): void {
     if (!this.form.valid || this.procesando) { return; }    
     this.procesando = true;
 

@@ -13,7 +13,7 @@
                         </div>
                     </div>
 
-                    <p-dataTable class="f-12" [value]="db_egresos" [filterDelay]=500 [lazy]="true" 
+                    <p-dataTable class="f-12" [value]="db_egresos" [filterDelay]=500 [lazy]="true"  (onFilter)="filter($event)"
                         (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
                         <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
                         <p-column field="monto"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
