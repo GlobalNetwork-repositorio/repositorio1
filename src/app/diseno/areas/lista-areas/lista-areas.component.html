@@ -4,19 +4,63 @@
             <div class="row">
                 <div class="col col-xl-12 col-lg-12">            
                     <div class="card mb-3">
-                        <div class="card-header">
-                            Historial Areas <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
-                            <div class="float-right">
+                            <div class="card-header">
+                                Historial Areas <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
+                                <div class="float-right">
                                 <button type="button" class="btn btn-success btn-sm" [routerLink]="['./crud-areas']"
                                     (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Crear Egreso</button>
                                 </div>
                             </div>
-        
-                            <p-dataTable class="f-12" [value]="db_area" [filterDelay]=500 [lazy]="true" 
-                                 (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
-                                <p-column field="idArea"  header="ID" [style]="{'width':'50px'}" [filter]="ShowBuqueda"></p-column>
-                                <p-column field="descripcion"  header="Area" [filter]="ShowBuqueda"></p-column>
-                            </p-dataTable>
+
+                            <p-table #dt class="f-12" [value]="db_area" selectionMode="single" [paginator]="true" [lazy]="false" (onLazyLoad)="filter($event)"
+                                [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]"
+                                 editable="true" editMode="cell">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th width="80px" [pSortableColumn]="'idArea'">
+                                            Codigo
+                                            <p-sortIcon [field]="'idArea'"></p-sortIcon>
+                                        </th>
+                                        <th [pSortableColumn]="'descripcion'">
+                                            Area
+                                            <p-sortIcon [field]="'descripcion'"></p-sortIcon>
+                                        </th>
+                                        <th width="80px"></th>
+                                    </tr>
+                                    <ng-container *ngIf="ShowBuqueda">
+                                        <tr>
+                                            <th> <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idArea','equals'])"></th>
+                                            <th> <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'descripcion','contains'])"></th>
+                                            <th>-</th>
+                                        </tr>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-area>
+                                    <tr [pSelectableRow]="area">
+                                        <td>{{area.idArea}}</td>
+                                        <ng-container *ngIf="!rowEdit; then row; else editRow"></ng-container>
+                                        <ng-template #row>
+                                            <td>{{area.descripcion}}</td>
+                                        </ng-template>
+                                        <ng-template #editRow>
+                                            <td pEditableColumn id=row{{area.idArea}}>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input type="text" [(ngModel)]="area.descripcion" #inputEdit (blur)="guardarEdit(area)" (keydown.enter)="guardarEdit(area)">
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{area.descripcion}}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                        </ng-template>                                                                            
+                                        <td>                                            
+                                            <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(area)"></i>
+                                            <i class="fa fa-pencil cursor" aria-hidden="true" title="Editar" (click)="edit(area)"></i>
+                                        </td>                      
+                                    </tr>
+                                </ng-template>
+                            </p-table>
                     </div>
                 </div>
             </div>

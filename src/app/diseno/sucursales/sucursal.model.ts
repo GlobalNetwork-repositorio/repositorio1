@@ -1,18 +1,11 @@
 export class Sucursal {
-    idSucursal: number;
-    correo: string;    
-    descripcion: string;    
-    telefono: string;
-
-    constructor (
-        idSucursal: number,
-        correo: string,
-        descripcion: string,
-        telefono: string,
+        constructor (
+        public idSucursal: number = null,
+        public correo: string = null,
+        public descripcion: string = null,
+        public direccion: string = null,
+        public telefono: string = null,
     ) {
-        this.idSucursal = idSucursal;
-        this.correo = correo;    
-        this.descripcion = descripcion;    
-        this.telefono = telefono;
+      
     }
   }

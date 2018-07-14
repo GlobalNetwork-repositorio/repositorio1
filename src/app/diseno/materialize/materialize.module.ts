@@ -6,7 +6,8 @@ import {
     MatInputModule, 
     MatDatepickerModule,
     MatNativeDateModule, 
-    MatSelectModule } from './materialize.index';
+    MatSelectModule, 
+    MatTabsModule} from './materialize.index';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import {
       CommonModule
     ],
     providers: [
-        MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule
+        MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, MatTabsModule
     ],
     declarations: []
   })

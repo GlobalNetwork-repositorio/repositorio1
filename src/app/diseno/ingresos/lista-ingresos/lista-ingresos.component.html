@@ -11,15 +11,20 @@
                                         (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Nuevo Ingreso</button>
                                 </div>
                             </div>
-        
-                            <p-dataTable class="f-12" [value]="db_ingreso" [filterDelay]=500 [lazy]="true" 
-                                (onFilter)="filter($event)" selectionMode="single" [responsive]="true">
+                                    
+                            <p-dataTable  class="f-12" emptyMessage="No hay registros" [value]="db_ingreso" [filterDelay]=500 [lazy]="true" (onLazyLoad)="filter($event)"
+                                    selectionMode="single" [responsive]="true" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">                                
                                 <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="montoIngresado"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="sucursal.descripcion" [style]="{'width':'150px'}" header="Sucursal" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="cuenta.banco"  header="Banco" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="conceptoIngreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>
                                 <p-column field="medioPago.descripcionMedioPago" [style]="{'width':'120px'}"  header="medio" [filter]="ShowBuqueda"></p-column>
+                                <p-column [style]="{'width':'40px'}">
+                                    <ng-template let-data="rowData" pTemplate type="body">
+                                        <i class="fa fa-trash-o" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(data)"></i>
+                                    </ng-template>
+                                </p-column>
                             </p-dataTable>        
                         </div>
                     </div>

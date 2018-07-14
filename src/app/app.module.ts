@@ -13,6 +13,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 
+// import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';
+
 // directiva
 // import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';
 // import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';

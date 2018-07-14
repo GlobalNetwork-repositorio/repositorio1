@@ -7,7 +7,6 @@ import { Ingreso } from '../ingreso.model';
 import { UsuariosService } from '../../usuarios/usuarios.service';
 import swal from 'sweetalert2';
 import { MSJ_SUCCESS } from '../../../config/config';
-import { CtrlAutocompleteDirective } from '../../../directivas/ctrl-autocomplete.directive';
 
 
 

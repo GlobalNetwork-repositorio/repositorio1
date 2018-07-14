@@ -13,7 +13,7 @@ import { MSJ_SUCCESS } from '../../../config/config';
 @Component({
   selector: 'app-crud-egresos',
   templateUrl: './crud-egresos.component.html',  
-  animations: [routerTransition()]
+  animations: [routerTransition()]  
 })
 export class CrudEgresosComponent implements OnInit {
 

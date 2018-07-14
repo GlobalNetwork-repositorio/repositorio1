@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DisenoComponent } from './diseno.component';
+// import { CtrlAutocompleteDirective } from './directivas/ctrl-autocomplete.directive';
 
 
 const routes: Routes = [

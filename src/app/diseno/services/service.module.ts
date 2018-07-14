@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {    
-    CrudService,    
+    CrudService
 } from './service.index';
 
 @NgModule({
@@ -11,6 +11,8 @@ import {
     providers: [
       CrudService
     ],
-    declarations: []
+    declarations: [
+     // CtrlAutocompleteDirective
+    ]
   })
   export class ServiceModule { }

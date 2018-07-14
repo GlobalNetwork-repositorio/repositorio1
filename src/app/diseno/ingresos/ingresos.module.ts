@@ -13,12 +13,11 @@ import { DataTableModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 
 import { MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule } from '../materialize/materialize.index';
-// import { ServiceModule } from '../services/service.module';
-import { CtrlAutocompleteDirective } from '../../directivas/ctrl-autocomplete.directive';
+import { DirectivasModule } from '../directivas/directivas.module';
 
 @NgModule({
     imports: [CommonModule, IngresosRoutingModule, PageHeaderModule, FormsModule, ReactiveFormsModule, NgSelectModule, DataTableModule, TableModule
-        ,MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule],
-    declarations: [ListaIngresosComponent, CrudIngresosComponent, CtrlAutocompleteDirective]
+        ,MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, DirectivasModule],
+    declarations: [ListaIngresosComponent, CrudIngresosComponent]
 })
 export class IngresosModule { }

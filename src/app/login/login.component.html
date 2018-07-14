@@ -11,7 +11,7 @@
                         <input type="password" formControlName="password" (keyup.enter)="onLoggedin()" class="form-control input-underline input-lg" id="x" placeholder="Contraseña">
                     </div>
                     <h5 class="text-danger" *ngIf="!estadoCredenciales">Credenciales incorrectas.</h5>
-                    <i *ngIf="verificando" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>                    
+                    <i *ngIf="verificando" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
                 </div>
                 <a class="btn rounded-btn" (click)="onLoggedin()">Ingresar </a>
                 &nbsp;

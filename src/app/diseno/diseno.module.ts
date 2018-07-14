@@ -15,8 +15,8 @@ import { ServiceModule } from './services/service.module';
         DisenoRoutingModule,        
         TranslateModule,
         NgbDropdownModule.forRoot(),
-        ServiceModule
-    ],
+        ServiceModule        
+    ],    
     declarations: [DisenoComponent, SidebarComponent, HeaderComponent]
 })
 export class DisenoModule { }

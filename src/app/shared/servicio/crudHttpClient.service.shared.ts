@@ -35,6 +35,7 @@ export class CrudHttpClientServiceShared {
     return this.httpClient.post<any>(url,model,{headers:header});
 
   }
+  
   update(model:any,controller:string,evento:string):Observable<any>{
       
     let url = this.configService.getUrlSecurityRes(controller,evento);

@@ -8,8 +8,9 @@ import { CrudSucursalesComponent } from './crud-sucursales/crud-sucursales.compo
 
 
 const routes: Routes = [
-    { path: '', component: ListaSucursalesComponent },
-    { path: 'crud-sucursales', component: CrudSucursalesComponent }
+    { path: '', component: ListaSucursalesComponent,
+        children: [{ path: 'crud-sucursales', component: CrudSucursalesComponent}]
+    }    
 ];
 
 @NgModule({

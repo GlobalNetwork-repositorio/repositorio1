@@ -1,144 +1,89 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Perfil de Usuario'" [icon]="'fa-desktop'"></app-page-header>
+    <app-page-header [heading]="'Usuario'" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
         <div class="row">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="col-md-12" align="center">
-                            <img class="img-responsive img-portfolio img-hover" src="assets/images/candado.png">
-                        </div>
-                        <div class="col-md-12">
-                            <p class="text-center">
-                                <strong>Luis Rojas</strong>
-                            </p>
-                            <p class="text-center">
-                                <em>ariesluis_12@hotmail.com</em>
-                            </p>
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-  
-                            <form>
-                                <div class="form-group">
-                                  <label for="exampleFormControlFile1">Example file input</label>
-                                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                                </div>
-                              </form>
-                            <br>
-                        </div>
+            <div class="col col-xl-12 col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Nuevo Usuario
                     </div>
-                    <div class="col-md-9">
-                        <div class="col-md-12" style="border-width: 1px 1px 0px 1px; border-style: solid; border-color: lightgrey;">
-                            <h3 style="text-align: center">Mi perfil
-                                <p>
-                                    <small>Añade información personal para actualizar tu perfil</small>
-                                </p>
-                            </h3>
-                        </div>
-                        <form name="modifyProfile" id="profileForm" novalidate>
-                            <div class="col-md-12" style="border-width: 1px 1px 0px 1px; border-style: solid; border-color: lightgrey; background: #f1f3f6;">
-                                <div class="col-md-12 col-md-offset-2">
-                                    <br>
-                                    <div class="control-group form-group">
-                                        <div class="controls">
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <input type="email" class="form-control" id="inputEmail4" placeholder="ID">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" id="inputPassword4" placeholder="Nombre/Apellido">
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-12">
-                                                    <input type="text" class="form-control" id="inputPassword4" placeholder="Direccion">
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" id="inputPassword4" placeholder="Telefono">
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
-                                                    <select class="form-control">
-                                                        <option>Masculino</option>
-                                                        <option>Femenino</option>
-                                                    </select>
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
-                                                    <input type="date" class="form-control" id="inputPassword4" placeholder="Fecha nacimiento">
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
-                                                    <input type="date" class="form-control" id="inputPassword4" placeholder="Fecha ingreso">
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
+                    <div class="card-header">
+                        <form [formGroup]="form">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Nombres y apellidos" formControlName="nombreApellido">
+                                    </mat-form-field>
+                                    
+                                    <!-- <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="DNI" formControlName="dni">
+                                    </mat-form-field> -->
 
-                                                    <select class="form-control">
-                                                        <option>Administracion</option>
-                                                        <option>Secretaria</option>
-                                                        <option>Personal</option>
-                                                    </select>
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Direccion" formControlName="direccion">
+                                    </mat-form-field>
 
-                                                </div>
-                                                <br>
-                                                <div class="form-group col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Telefono" formControlName="telefono">
+                                    </mat-form-field>
 
-                                                    <select class="form-control">
-                                                        <option>Moyobamba</option>
-                                                        <option>Tarapoto</option>
-                                                        <option>Soritor</option>
-                                                        <option>Bagua</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" id="inputPassword4" placeholder="Usuario">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña">
-                                                </div>
-                                            </div>
-                                            <div class="btn-group" dropdown>
-                                                <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                                                    Button dropdown
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                                    <li role="menuitem">
-                                                        <a class="dropdown-item" href="#">Masculino</a>
-                                                    </li>
-                                                    <li role="menuitem">
-                                                        <a class="dropdown-item" href="#">Femenino</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <br>
-                                            <p class="help-block"></p>
-                                        </div>
-                                    </div>
+                                    <!-- <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Correo" formControlName="correo">
+                                    </mat-form-field> -->
+                                    
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Fecha de Nacimiento" type="date" formControlName="fechaNacimiento">
+                                    </mat-form-field>                                    
+                                    
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus autofocus autofocus matInput placeholder="Fecha de Nacimiento" type="date" formControlName="fechaIngreso">
+                                    </mat-form-field>                                    
+
                                 </div>
-                            </div>
-                            <div class="col-md-12" style="border: 1px solid lightgrey; background: #e5eaf2;">
-                                <div class="col-md-8 col-md-offset-2">
-                                    <div class="control-group form-group">
+                                <div class="col-md-4">
+                                     
+                                    <!-- [compareWith]="compareArea" Se utiliza para obtener el valor incial. Ej: Al editar los valores obtenidos deben mostrarse en combo -->
+                                    <mat-form-field class="w-100">
+                                        <mat-select appNextfocus placeholder="Sucursal" formControlName="sucursal" [compareWith]="compareSucursal">
+                                            <mat-option *ngFor="let sucursal of db_sucursal" [value]="sucursal">
+                                                {{sucursal.descripcion}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
 
-                                    </div>
-                                </div>
-                                <div class="col-md-12 container allFormButtons">
-                                    <div class="form-group">
-                                        <button type="button" id="btnCancel" class="btn btn-danger">Cancelar</button>
-                                        <button type="submit" id="btnEnviar" class="btn btn-primary">Crear</button>
-                                    </div>
+                                     <!-- [compareWith]="compareArea" Se utiliza para obtener el valor incial. Ej: Al editar los valores obtenidos deben mostrarse en combo -->
+                                    <mat-form-field class="w-100">
+                                        <mat-select appNextfocus placeholder="Area" formControlName="area" [compareWith]="compareArea">
+                                            <mat-option *ngFor="let item of db_area" [value]="item">
+                                                {{item.descripcion}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>                                                                    
+
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus matInput placeholder="Usuario" formControlName="usuario">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-100">
+                                        <input appNextfocus matInput type="password" placeholder="Contrasena" formControlName="contrasena">
+                                    </mat-form-field>
+
                                 </div>
                             </div>
                         </form>
+
+                        <hr>
+                        <div>
+                            <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success mr-2" (keydown.enter)="guardarCambios()" (click)="guardarCambios()"
+                                [disabled]="!form.valid">
+                                <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+                                [F10] Guardar
+                            </button>
+                            <button appKeyClick="Escape" type="button" class="btn btn-danger" [routerLink]="['../']">[Esc] Cancelar</button>
+                        </div>
                     </div>
                 </div>
-                &nbsp;
-                <hr>
-               
             </div>
         </div>
     </div>
-</div>
