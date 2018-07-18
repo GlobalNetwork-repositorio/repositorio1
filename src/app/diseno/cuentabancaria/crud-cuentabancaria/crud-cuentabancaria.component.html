@@ -1,48 +1,48 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Cuenta Bancaria'" [icon]="'fa-desktop'"></app-page-header>
-    <div [@routerTransition]>
-      <div class="row">
-        <div class="col col-xl-12 col-lg-12">
-          <div class="card mb-3">
-            <div class="card-header">
-              Nueva Cuenta Bancaria
-            </div>
-            <div class="card-header">
-              <div class="form-group row">
-                <label for="idarea-input" class="col-2 col-form-label">Id</label>
-                <div class="col-10">
-                  <input class="form-control" type="text" id="idarea-input">
+  <app-page-header [heading]="'Cuenta Bancaria'" [icon]="'fa-desktop'"></app-page-header>
+  <div [@routerTransition]>
+    <div class="row">
+      <div class="col col-xl-12 col-lg-12">
+        <div class="card mb-3">
+          <div class="card-header">
+             Cuenta Bancaria
+          </div>
+          <div class="card-header">
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col">
+
+                  <mat-form-field class="w-100">
+                    <input appNextfocus autofocus autofocus matInput placeholder="Banco" formControlName="banco">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input appNextfocus autofocus autofocus matInput placeholder="N° Cuenta" formControlName="numeroCuenta">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input appNextfocus autofocus autofocus matInput placeholder="Moneda" formControlName="tipoCuenta">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <input appNextfocus autofocus autofocus matInput placeholder="Titular" formControlName="titularCuenta">
+                  </mat-form-field>
+                  
                 </div>
               </div>
-              <div class="form-group row">
-                <label for="descriarea-input" class="col-2 col-form-label">Numero de Cuenta</label>
-                <div class="col-10">
-                  <input class="form-control" type="number" id="descriarea-input" >
-                </div>
-              </div>
-              <div class="form-group row">
-                  <label for="descriarea-input" class="col-2 col-form-label">Titular de Cuenta</label>
-                  <div class="col-10">
-                    <input class="form-control" type="text" id="descriarea-input">
-                  </div>
-                </div>
-                <div class="form-group row">
-                    <label for="descriarea-input" class="col-2 col-form-label">Tipo de Cuenta</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" id="descriarea-input">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                      <label for="descriarea-input" class="col-2 col-form-label">Banco</label>
-                      <div class="col-10">
-                        <input class="form-control" type="text" id="descriarea-input">
-                      </div>
-                    </div>
-              <hr>
-              <button type="button" class="btn btn-success">Guardar</button>
-              <button type="button" class="btn btn-danger">Cancelar</button>
+            </form>
+
+            <hr>
+            <div>
+              <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success mr-2" (keydown.enter)="guardarCambios()" (click)="guardarCambios()"
+                [disabled]="!form.valid">
+                <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+                [F10] Guardar
+              </button>
+              <button appKeyClick="Escape" type="button" class="btn btn-danger" [routerLink]="['../']">[Esc] Cancelar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>

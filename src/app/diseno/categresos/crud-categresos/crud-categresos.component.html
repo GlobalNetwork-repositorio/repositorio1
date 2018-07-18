@@ -5,28 +5,114 @@
         <div class="col col-xl-12 col-lg-12">
           <div class="card mb-3">
             <div class="card-header">
-              Nueva Categoria de Egreso
-              <div class="float-right">
-                  <button type="button" [routerLink]="['../']" class="btn btn-success btn-sm">
-                    Atras</button>
-              </div>
+              Nuevo Concepto              
+                <div class="float-right">
+                  <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success mr-2 btn-sm" (click)="guardarCambios()" [disabled]="!form.valid">
+                    <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
+                    [F10] Guardar
+                  </button>
+                  <button appKeyClick="Escape" type="button" class="btn btn-danger btn-sm" [routerLink]="['../']">[Esc] Atras</button>
+                </div>
             </div>
             <div class="card-header">
-              <div class="form-group row">
-                <label for="idarea-input" class="col-2 col-form-label">Id</label>
-                <div class="col-10">
-                  <input class="form-control" type="text" id="idarea-input">
-                </div>
+                            
+                <div class="row">
+                  <div class="col-md-5">
+                    <form [formGroup]="form">
+                    <mat-form-field class="w-100">
+                      <mat-select appNextfocus placeholder="Rubro" formControlName="rubro" [compareWith]="compareRubro">
+                        <mat-option *ngFor="let item of db_rubro" [value]="item">
+                          {{item.idRubro}} - {{item.descripcion}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="w-100">
+                      <input appNextfocus autocomplete="off" autofocus matInput placeholder="Descripcion" formControlName="descripcion">
+                    </mat-form-field>
+                    </form>
+                  </div>
+                </div>                            
+              <br>
+              <div>
+                <h6>Detalle - Registros</h6>
+                <hr>                  
+                  <div class="row">
+                    <div class="col-md-8">
+                      <form [formGroup]="formRegistro">
+                        <mat-form-field class="w-100">
+                          <input appNextfocus autocomplete="off" autofocus matInput placeholder="Agregar Registro" formControlName="descripcion" (keyup.enter)="guardarConceptoRegistro()">
+                          <mat-hint>Presione enter para agregar</mat-hint>
+                          <mat-icon matSuffix title="Presione enter para agregar"><i [ngClass]="{'fa-spinner fa-spin fa-fw': procesando_concepto_registro, 'fa-keyboard-o': !procesando_concepto_registro}" class="fa" aria-hidden="true"></i></mat-icon>
+                          <!-- <mat-icon matSuffix title="Presione enter para agregar"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></mat-icon> -->
+                        </mat-form-field>                    
+                      </form>
+                    <br>
+
+
+                    <!-- tabla registros -->
+                
+                    <p-table #dt class="f-12 pl-3" [value]="db_concepto_registro" selectionMode="single" [paginator]="true" [lazy]="false"
+                      [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]" 
+                      editable="true" editMode="cell">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th width="80px" [pSortableColumn]="'idConceptoRegistro'">
+                            Codigo
+                            <p-sortIcon [field]="'idConceptoRegistro'"></p-sortIcon>
+                          </th>
+                          <th [pSortableColumn]="'descripcion'">
+                            Registro
+                            <p-sortIcon [field]="'descripcion'"></p-sortIcon>
+                          </th>
+                          <th width="80px"></th>
+                        </tr>
+                        <ng-container *ngIf="ShowBuqueda">
+                          <tr>
+                            <th>
+                              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idConceptoRegistro','equals'])">
+                            </th>
+                            <th>
+                              <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'descripcion','contains'])">
+                            </th>
+                            <th>-</th>
+                          </tr>
+                        </ng-container>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-item>
+                        <tr [pSelectableRow]="area">
+                          <td>{{item.idConceptoRegistro}}</td>
+                          <ng-container *ngIf="!rowEdit; then row; else editRow"></ng-container>
+                          <ng-template #row>
+                            <td>{{item.descripcion}}</td>
+                          </ng-template>
+                          <ng-template #editRow>
+                            <td pEditableColumn id=row{{item.idConceptoRegistro}}>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <input type="text" [(ngModel)]="item.descripcion" #inputEdit (blur)="guardarEditConceptoRegistro(item)" (keydown.enter)="guardarEditConceptoRegistro(item)">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{item.descripcion}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
+                          </ng-template>
+                          <td>
+                            <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarConceptoRegistro(item)"></i>
+                            <i class="fa fa-pencil cursor" aria-hidden="true" title="Editar" (click)="editConceptoRegistro(item)"></i>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                    <!-- tabla registros -->
+                    </div>
+                  </div>                
+
               </div>
-              <div class="form-group row">
-                <label for="descriarea-input" class="col-2 col-form-label">Descripcion</label>
-                <div class="col-10">
-                  <input class="form-control" type="text" id="descriarea-input">
-                </div>
-              </div>
-              <hr>
-              <button type="button" class="btn btn-success">Guardar</button>
-              <button type="button" class="btn btn-danger">Cancelar</button>
+              <br>
+              
+
             </div>
           </div>
         </div>

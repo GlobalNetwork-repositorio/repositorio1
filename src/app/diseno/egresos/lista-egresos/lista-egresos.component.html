@@ -13,7 +13,7 @@
                         </div>
                     </div>                    
                     
-                    <p-dataTable class="f-12" emptyMessage="No hay registros" [value]="db_egresos" [filterDelay]=500 [lazy]="true" (onLazyLoad)="filter($event)"
+                    <!-- <p-dataTable class="f-12" emptyMessage="No hay registros" [value]="db_egresos" [filterDelay]=500 [lazy]="true" (onLazyLoad)="filter($event)"
                         selectionMode="single" [responsive]="true" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">
 
                         <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
@@ -27,7 +27,64 @@
                                 <i class="fa fa-trash-o" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(data)"></i>
                             </ng-template>
                         </p-column>
-                    </p-dataTable>                                         
+                    </p-dataTable>         -->
+                    
+                    <p-table #dt class="f-12" [value]="db_egresos" selectionMode="single" [paginator]="true" [lazy]="true" (onLazyLoad)="filter($event)"
+                        [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th width="80px" [pSortableColumn]="'idEgreso'"> Codigo <p-sortIcon [field]="'idEgreso'"></p-sortIcon></th>
+                                <th [pSortableColumn]="'sucursal.descripcion'">Sucursal <p-sortIcon [field]="'sucursal.descripcion'"></p-sortIcon></th>                                
+                                <th [pSortableColumn]="'cuenta.banco'">Banco<p-sortIcon [field]="'cuenta.banco'"></p-sortIcon></th>
+                                <th [pSortableColumn]="'concepto.descripcion'">Concepto<p-sortIcon [field]="'concepto.descripcion'"></p-sortIcon></th>
+                                <th [pSortableColumn]="'conceptoRegistro.descripcion'">Detalle<p-sortIcon [field]="'conceptoRegistro.descripcion'"></p-sortIcon></th>
+                                <th [pSortableColumn]="'medioPago.descripcionMedioPago'">Medio<p-sortIcon [field]="'medioPago.descripcionMedioPago'"></p-sortIcon></th>
+                                <th [pSortableColumn]="'monto'">Importe<p-sortIcon [field]="'monto'"></p-sortIcon></th>
+                                <th width="80px"></th>
+                            </tr>
+                            <ng-container *ngIf="ShowBuqueda">
+                                <tr>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idEgreso','equals'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'sucursal.descripcion','contains'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'cuenta.banco','contains'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'conceptoRegistro.concepto.descripcion','contains'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'conceptoRegistro.descripcion','contains'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'medioPago.descripcionMedioPago','contains'])">
+                                    </th>
+                                    <th>
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'monto','contains'])">
+                                    </th>
+                                    <th>-</th>
+                                </tr>
+                            </ng-container>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr [pSelectableRow]="item">
+                                <td>{{item.idEgreso}}</td>
+                                <td>{{item.sucursal.descripcion}}</td>
+                                <td>{{item.cuenta.banco}}</td>
+                                <td>{{item?.conceptoRegistro?.concepto?.descripcion}}</td>
+                                <td>{{item?.conceptoRegistro?.descripcion}}</td>
+                                <td>{{item.medioPago.descripcionMedioPago}}</td>
+                                <td>{{item.monto | number:'0.2'}}</td>
+                                <td>
+                                    <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
+                                    <i class="fa fa-list-alt cursor" aria-hidden="true" title="Detalles" [routerLink]="['./crud-egresos', {id: item.idEgreso}]"></i>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
             </div>
         </div>

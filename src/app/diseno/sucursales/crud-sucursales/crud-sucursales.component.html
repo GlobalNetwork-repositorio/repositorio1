@@ -38,11 +38,11 @@
 
               <hr>
               <div>
-                <button appNextfocus type="button" class="btn btn-success mr-2" (keydown.enter)="guardarCambios()" (click)="guardarCambios()" [disabled]="!form.valid">
+                <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success mr-2" (keydown.enter)="guardarCambios()" (click)="guardarCambios()" [disabled]="!form.valid">
                   <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
-                  Guardar
+                  [F10] Guardar
                 </button>
-                <button type="button" class="btn btn-danger" [routerLink]="['../']">Cancelar</button>
+                <button appKeyClick="Escape" type="button" class="btn btn-danger" [routerLink]="['../']">[Esc] Cancelar</button>
               </div>              
             </div>
           </div>

@@ -15,6 +15,11 @@ export class CrudService {
     return this.http.get<any[]>(url);
   }
 
+  getAllBy(controller: string, evento: string, id: any) {
+    const url = `${this.url}/${controller}/${evento}/${id}`;
+    return this.http.get<any[]>(url);
+  }
+
   create (model:any,controller:string,evento:string): Observable<any> {
     const url = `${this.url}/${controller}/${evento}`;
     const header = new HttpHeaders({'Content-Type': 'application/json'});

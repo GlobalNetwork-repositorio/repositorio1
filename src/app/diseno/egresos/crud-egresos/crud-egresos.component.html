@@ -21,34 +21,55 @@
                                 </mat-form-field>
 
                                 <mat-form-field class="w-100">
-                                    <mat-select placeholder="Sucursal" formControlName="sucursal">
+                                  <input matInput placeholder="Sucursal" formControlName="sucursal" readonly>
+                                </mat-form-field>
+
+                                <!-- <mat-form-field class="w-100">
+                                    <mat-select appNextfocus placeholder="Sucursal" formControlName="sucursal">
                                       <mat-option *ngFor="let sucursal of db_sucursal" [value]="sucursal">
                                         {{sucursal.descripcion}}
                                       </mat-option>
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field> -->
+
 
                                 <mat-form-field class="w-100">
-                                    <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
+                                  <input appNextfocus autofocus autocomplete="off" matInput placeholder="Fecha Egreso" type="date" formControlName="fecha" value="{{fecha | date:'yyyy-MM-dd'}}">
+                                </mat-form-field>
+
+                                <!-- <mat-form-field class="w-100">
+                                    <input appNextfocus matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>                                
+                                </mat-form-field> -->
+
                             </div>
                             
                             <div class="col-md-8">
 
                                <!-- [displayWith]="displayFnAutoComplete" -->
                               <mat-form-field class="w-100">
-                                <input matInput placeholder="Motivo" [matAutocomplete]="auto" formControlName="conceptoEgreso" appCtrlAutocomplete [data]="db_concepto_egreso" etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltrados($event)">
-                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnAutoComplete">
+                                <input appNextfocus matInput autocomplete="off" placeholder="Concepto" [matAutocomplete]="auto" formControlName="conceptoEgreso" appCtrlAutocomplete [data]="db_concepto_egreso" 
+                                etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltrados($event)">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnAutoComplete" (optionSelected)="getConceptoRegistroByIdConcepto($event.option.value.idConcepto)">
                                   <mat-option *ngFor="let concepto of db_concepto_egreso_filter" [value]="concepto">
                                     <span>{{concepto.descripcion}}</span>
                                   </mat-option>
                                 </mat-autocomplete>
-                              </mat-form-field>                              
+                              </mat-form-field>
+                              
+                              <mat-form-field class="w-100">
+                                <input appNextfocus matInput autocomplete="off" placeholder="Concepto Detalle" [matAutocomplete]="ConceptoRegistro" formControlName="conceptoRegistro" appCtrlAutocomplete [data]="db_concepto_registro"
+                                  etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltradosRegistro($event)">
+                                <mat-autocomplete #ConceptoRegistro="matAutocomplete" [displayWith]="displayFnAutoCompleteRegistro">
+                                  <mat-option *ngFor="let registro of db_concepto_registro_filter" [value]="registro">
+                                    <span>{{registro.descripcion}}</span>
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
 
                               <mat-form-field class="w-100">
-                                  <mat-select placeholder="Cuenta Origen" formControlName="cuenta">
+                                  <mat-select appNextfocus placeholder="Cuenta Origen" formControlName="cuenta">
                                     <mat-option *ngFor="let cuenta of db_cuenta_origen" [value]="cuenta">
                                       {{cuenta.banco}}
                                     </mat-option>
@@ -56,7 +77,7 @@
                               </mat-form-field>
 
                               <mat-form-field class="w-100">
-                                  <mat-select placeholder="Medio de Pago" formControlName="medioPago">
+                                  <mat-select appNextfocus placeholder="Medio de Pago" formControlName="medioPago">
                                     <mat-option *ngFor="let medio of db_medio_pago" [value]="medio">
                                       {{medio.descripcionMedioPago}}
                                     </mat-option>
@@ -64,11 +85,11 @@
                               </mat-form-field>
 
                               <mat-form-field class="w-100">
-                                  <input type="number" matInput placeholder="Importe" formControlName="monto">
+                                  <input appNextfocus type="number" matInput placeholder="Importe" formControlName="monto">
                               </mat-form-field>                                                          
                               
                               <mat-form-field class="w-100">
-                                  <textarea matInput placeholder="Escriba las especificiones" formControlName="detalles"></textarea>
+                                  <textarea appNextfocus matInput placeholder="Glosa" formControlName="detalles"></textarea>
                               </mat-form-field>
 
                               <input class="ng-hide" id="input-file-id" multiple type="file" formControlName="imagen"/>
@@ -81,11 +102,11 @@
 
                           <hr>
                           <div>
-                            <button type="button" class="btn btn-success mr-2" (click)="guardarCambios()" [disabled]="!form.valid">
+                            <button appNextfocus appKeyClick="F10" type="button" class="btn btn-success mr-2" (click)="guardarCambios()" [disabled]="!form.valid">
                               <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
-                              Guardar
+                              [F10] Guardar
                             </button>
-                            <button type="button" class="btn btn-danger" [routerLink]="['../']">Cancelar</button>
+                            <button type="button" class="btn btn-danger" [routerLink]="['../']">Atras</button>
                           </div>
                         </div>
                       </div>

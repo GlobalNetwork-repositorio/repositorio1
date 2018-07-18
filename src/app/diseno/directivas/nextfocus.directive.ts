@@ -12,7 +12,7 @@ export class NextfocusDirective {
     this.el = this._el;
   }
 
-  @HostListener('keydown.enter', ['$event']) onKeyDown(e: any) {      
+  @HostListener('keyup.enter', ['$event']) onKeyDown(e: any) {      
       let index_activo: number;
       let next_control_focus: any;
       const controles = document.querySelectorAll('[appNextfocus]');

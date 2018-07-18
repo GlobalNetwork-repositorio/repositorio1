@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {    
-    CrudService
+    CrudService,
+  Utilitarios
 } from './service.index';
 
 @NgModule({
@@ -9,7 +10,8 @@ import {
       CommonModule
     ],
     providers: [
-      CrudService
+      CrudService,
+      Utilitarios
     ],
     declarations: [
      // CtrlAutocompleteDirective

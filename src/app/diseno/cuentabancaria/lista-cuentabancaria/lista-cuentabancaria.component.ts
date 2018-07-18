@@ -23,7 +23,7 @@ export class ListaCuentaBancariaComponent implements OnInit {
   filterPage: any;
   filtrosActivos: any;
   totalRecords: number;
-  http_modelo: string = 'cuenta';
+  http_controller: string = 'cuenta';
 
   constructor(private crudService: CrudService) { }
 
@@ -35,20 +35,19 @@ export class ListaCuentaBancariaComponent implements OnInit {
   initObservable() {
     this.Typeahead.pipe(distinctUntilChanged(), debounceTime(500))
       .subscribe((res: any) => {
-        const value = res[0]; const field = res[1]; const operator = res[2];
-        console.log("2");
+        const value = res[0]; const field = res[1]; const operator = res[2];        
         this.dataTable.filter(value, field, operator);
       });
   }
 
   maestros() {
-    this.crudService.getAll(this.http_modelo, 'getall').subscribe((res: any) => { this.db_data = res; this.totalRecords = res.totalCount; });
+    this.crudService.getAll(this.http_controller, 'getall').subscribe((res: any) => { this.db_data = res; this.totalRecords = res.totalCount; });
   }
 
   borrarRegistro(data: any) {
     swal(MSJ_ALERT_BORRAR).then((res: any) => {
       if (res.value) {
-        this.crudService.delete(data.idCuenta, this.http_modelo, 'delete').subscribe(res => {
+        this.crudService.delete(data.idCuenta, this.http_controller, 'delete').subscribe(res => {
           swal(MSJ_SUCCESS); this.maestros();
         });
       }
@@ -57,6 +56,9 @@ export class ListaCuentaBancariaComponent implements OnInit {
 
   ShowChild() { this.showChild = this.showChild; }
   onActivateChild() { this.showChild = true; }
-  onDeactivateChild() { this.showChild = false; }
+  onDeactivateChild() { 
+    this.showChild = false; 
+    if (this.crudService.refreshByStorage(this.http_controller)) { this.maestros() }
+  }
 
 }

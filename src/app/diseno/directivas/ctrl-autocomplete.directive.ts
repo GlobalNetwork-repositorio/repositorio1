@@ -18,7 +18,7 @@ export class CtrlAutocompleteDirective {
     if (this.data === undefined || this.etiqueta === undefined) {return}        
     let val = <string>value.toString();
     val = val.toLowerCase();
-
+    
     this.DataFiltrada = this.data.filter((x: any) => x[this.etiqueta].toLowerCase().indexOf(val) !== -1).slice(0, 5);
     this.DatosFiltrados.emit(this.DataFiltrada);
   }

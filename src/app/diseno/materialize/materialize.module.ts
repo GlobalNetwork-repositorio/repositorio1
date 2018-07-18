@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { 
     MatAutocompleteModule, 
@@ -7,15 +8,18 @@ import {
     MatDatepickerModule,
     MatNativeDateModule, 
     MatSelectModule, 
-    MatTabsModule} from './materialize.index';
+    MatTabsModule,
+    MatIconModule} from './materialize.index';
 
 
 @NgModule({
     imports: [
       CommonModule
+     // BrowserAnimationsModule
     ],
     providers: [
-        MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, MatTabsModule
+        MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule, MatTabsModule,
+        MatIconModule
     ],
     declarations: []
   })

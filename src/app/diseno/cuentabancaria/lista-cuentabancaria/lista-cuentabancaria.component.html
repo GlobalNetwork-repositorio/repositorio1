@@ -18,11 +18,21 @@
                         [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th width="80px">Codigo</th>
-                                <th>Banco</th>
-                                <th>N° Cuenta</th>
-                                <th>Moneda</th>
-                                <th>Titular</th>
+                                <th width="80px" [pSortableColumn]="'idCuenta'"> Codigo
+                                    <p-sortIcon [field]="'idCuenta'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'banco'"> banco
+                                    <p-sortIcon [field]="'banco'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'numeroCuenta'"> N° Cuenta
+                                    <p-sortIcon [field]="'numeroCuenta'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'tipoCuenta'"> Moneda
+                                    <p-sortIcon [field]="'tipoCuenta'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'titularCuenta'"> Titular
+                                    <p-sortIcon [field]="'titularCuenta'"></p-sortIcon>
+                                </th>                                
                                 <th width="80px"></th>
                             </tr>
                             <ng-container *ngIf="ShowBuqueda">
@@ -48,13 +58,14 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-item>
                             <tr [pSelectableRow]="item">
-                                <td>{{item.idCuneta}}</td>
+                                <td>{{item.idCuenta}}</td>
                                 <td>{{item.banco}}</td>
                                 <td>{{item.numeroCuenta}}</td>
                                 <td>{{item.tipoCuenta}}</td>
                                 <td>{{item.titularCuenta}}</td>
-                                <td>
-                                    <i class="fa fa-trash-o" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
+                                <td>                                    
+                                    <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
+                                    <i class="fa fa-pencil cursor" aria-hidden="true" title="Editar" [routerLink]="['./crud-cuentabancaria', {id: item.idCuenta}]"></i>
                                 </td>
                             </tr>
                         </ng-template>
