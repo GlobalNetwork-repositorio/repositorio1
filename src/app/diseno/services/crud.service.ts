@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import { Observable } from 'rxjs/Observable';
 
@@ -39,6 +39,19 @@ export class CrudService {
     return this.http.get<any>(url);
   }
 
+  // en egresos ingresos
+  editar(model:any, otros_datos: any, controller: string, evento: string): Observable<any> {
+    const url = `${this.url}/${controller}/${evento}`;
+    const header = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    otros_datos = otros_datos ? JSON.stringify(otros_datos) : '';
+    let parametros = new HttpParams().set("historial", otros_datos);
+
+    localStorage.setItem('pintar', controller); // para actualizar las listas despues de modificar o guardar
+
+    return this.http.post(url, JSON.stringify(model), { params: parametros, headers: header });        
+  }
+
   getPagination(pagenumber, rows, sortdireccion, sortcolumn, controller, evento, filters): Observable<any> {
     const url = `${this.url}/${controller}/${evento}?pagenumber=${pagenumber}&rows=${rows}&sortdireccion=${sortdireccion}&sortcolumn=${sortcolumn}`;
     console.log('url', url);
@@ -51,7 +64,7 @@ export class CrudService {
   }    
 
   // para refrescar las listas despues de agregar o modificar registros por el crud
-  refreshByStorage (controller: string): boolean {
+  refreshByStorage (controller: string): boolean {    
     const valorPintarStorage = localStorage.getItem('pintar') || '';
     const rpt = valorPintarStorage === controller ? true : false;
     if ( rpt ) { localStorage.removeItem('pintar'); }

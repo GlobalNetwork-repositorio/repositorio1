@@ -47,16 +47,16 @@ export class LoginComponent implements OnInit {
             if ( datos.sucess ) {
                 localStorage.setItem("currentUser", JSON.stringify(datos.usuario));
                 localStorage.setItem("token", datos.token);
-                this.router.navigate(['/inicio']);                
+                this.router.navigate(['./inicio']);
             } else {
-                estado = false;                
+                estado = false;
                 localStorage.clear();
             }
             
             setTimeout(() => {
                 this.estadoCredenciales = estado;
                 this.verificando = false;
-            }, 800);            
+            }, 800);
         });
         // localStorage.setItem('isLoggedin', 'true');
     }

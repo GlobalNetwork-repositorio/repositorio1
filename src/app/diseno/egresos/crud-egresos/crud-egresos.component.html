@@ -6,6 +6,9 @@
                       <div class="card mb-3">
                         <div class="card-header">
                           Nuevo Egreso
+                          <!-- <div class="float-right" *ngIf="esEdicion">
+                            <span class="badge badge-info f-12">Solo lectura</span>
+                          </div> -->
                           <!-- <div class="float-right">
                               <button type="button" [routerLink]="['../']" class="btn btn-success btn-sm">
                                 Atras</button>
@@ -24,25 +27,9 @@
                                   <input matInput placeholder="Sucursal" formControlName="sucursal" readonly>
                                 </mat-form-field>
 
-                                <!-- <mat-form-field class="w-100">
-                                    <mat-select appNextfocus placeholder="Sucursal" formControlName="sucursal">
-                                      <mat-option *ngFor="let sucursal of db_sucursal" [value]="sucursal">
-                                        {{sucursal.descripcion}}
-                                      </mat-option>
-                                    </mat-select>
-                                </mat-form-field> -->
-
-
                                 <mat-form-field class="w-100">
-                                  <input appNextfocus autofocus autocomplete="off" matInput placeholder="Fecha Egreso" type="date" formControlName="fecha" value="{{fecha | date:'yyyy-MM-dd'}}">
+                                  <input appNextfocus autofocus autocomplete="off" matInput placeholder="Fecha Egreso" type="date" formControlName="fecha" value="{{fecha | date:'yyyy-MM-dd'}}" >
                                 </mat-form-field>
-
-                                <!-- <mat-form-field class="w-100">
-                                    <input appNextfocus matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="fecha">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field> -->
-
                             </div>
                             
                             <div class="col-md-8">
@@ -50,7 +37,7 @@
                                <!-- [displayWith]="displayFnAutoComplete" -->
                               <mat-form-field class="w-100">
                                 <input appNextfocus matInput autocomplete="off" placeholder="Concepto" [matAutocomplete]="auto" formControlName="conceptoEgreso" appCtrlAutocomplete [data]="db_concepto_egreso" 
-                                etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltrados($event)">
+                                  etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltrados($event)">
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnAutoComplete" (optionSelected)="getConceptoRegistroByIdConcepto($event.option.value.idConcepto)">
                                   <mat-option *ngFor="let concepto of db_concepto_egreso_filter" [value]="concepto">
                                     <span>{{concepto.descripcion}}</span>
@@ -60,7 +47,7 @@
                               
                               <mat-form-field class="w-100">
                                 <input appNextfocus matInput autocomplete="off" placeholder="Concepto Detalle" [matAutocomplete]="ConceptoRegistro" formControlName="conceptoRegistro" appCtrlAutocomplete [data]="db_concepto_registro"
-                                  etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltradosRegistro($event)">
+                                    etiqueta="descripcion" (DatosFiltrados)="setAutoCompleteDatosFiltradosRegistro($event)">
                                 <mat-autocomplete #ConceptoRegistro="matAutocomplete" [displayWith]="displayFnAutoCompleteRegistro">
                                   <mat-option *ngFor="let registro of db_concepto_registro_filter" [value]="registro">
                                     <span>{{registro.descripcion}}</span>
@@ -69,7 +56,7 @@
                               </mat-form-field>
 
                               <mat-form-field class="w-100">
-                                  <mat-select appNextfocus placeholder="Cuenta Origen" formControlName="cuenta">
+                                  <mat-select  appNextfocus placeholder="Cuenta Origen" [compareWith]="compareCuenta" formControlName="cuenta">
                                     <mat-option *ngFor="let cuenta of db_cuenta_origen" [value]="cuenta">
                                       {{cuenta.banco}}
                                     </mat-option>
@@ -77,12 +64,20 @@
                               </mat-form-field>
 
                               <mat-form-field class="w-100">
-                                  <mat-select appNextfocus placeholder="Medio de Pago" formControlName="medioPago">
+                                <mat-select appNextfocus placeholder="Cuenta Origen" [compareWith]="compareMedio" formControlName="medioPago">
+                                  <mat-option *ngFor="let item_medio of db_medio_pago" [value]="item_medio">
+                                    {{item_medio.descripcionMedioPago}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                              <!-- <mat-form-field class="w-100">
+                                  <mat-select appNextfocus placeholder="Medio de Pago" [compareWith]="compareMedio" formControlNme="medioPago">
                                     <mat-option *ngFor="let medio of db_medio_pago" [value]="medio">
                                       {{medio.descripcionMedioPago}}
                                     </mat-option>
                                   </mat-select>
-                              </mat-form-field>
+                              </mat-form-field> -->
 
                               <mat-form-field class="w-100">
                                   <input appNextfocus type="number" matInput placeholder="Importe" formControlName="monto">
@@ -106,7 +101,8 @@
                               <i *ngIf="procesando" class="fa fa-spinner fa-spin fa-fw"></i>
                               [F10] Guardar
                             </button>
-                            <button type="button" class="btn btn-danger" [routerLink]="['../']">Atras</button>
+                            <!-- <button *ngIf="!esEdicion" type="button" class="btn btn-danger" [routerLink]="['../']">Atras</button> -->
+                            <button appKeyClick="Escape" type="button" class="btn btn-danger" [routerLink]="['../']">[Esc] Atras</button>
                           </div>
                         </div>
                       </div>

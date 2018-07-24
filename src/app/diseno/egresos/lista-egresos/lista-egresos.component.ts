@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { CrudService } from '../../services/crud.service';
 import { Egreso } from '../egreso.model';
-import { EgresosService } from '../egresos.service';
 import swal from 'sweetalert2';
 import { MSJ_ALERT_BORRAR, MSJ_SUCCESS } from '../../../config/config';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs/internal/Subject';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { CrudService, Utilitarios } from '../../services/service.index';
+import { UsuariosService } from '../../usuarios/usuarios.service';
+import { UsuariosModule } from '../../usuarios/usuarios.module';
+import { Usuario } from '../../usuarios/usuario.model';
 // import { CrudHttpClientServiceShared } from '../../../shared/servicio/crudHttpClient.service.shared';
 
 
@@ -23,15 +25,25 @@ export class ListaEgresosComponent implements OnInit {
   ShowBuqueda: boolean = false;
   showChild: boolean = false;    
 
+  usuario: Usuario;
+
   @ViewChild('dt') dataTable: Table;
   Typeahead = new Subject<string>();
   filterPage: any;
   totalRecords: number = 0;
   filtrosActivos: any;
-  constructor(private crudService: CrudService, private egresoService: EgresosService) { }
+
+  sumaColumnas: any = null;
+  
+  constructor(
+    private crudService: CrudService,
+    private usuarioService: UsuariosService,
+    private utilitario: Utilitarios    
+  ) { }
 
   ngOnInit() {
     this.initObservable();
+    this.usuario = this.usuarioService.getUsuario();
   }
 
   initObservable() {
@@ -75,7 +87,9 @@ export class ListaEgresosComponent implements OnInit {
     this.crudService.getPagination(pageMostar === null ? 0 : pageMostar, rows === null ? 10 : e.rows, 'asc', 'idEgreso', 'egreso', 'paginacion', filtros)
       .subscribe((res: any) => {        
         this.db_egresos = res.data;
-        this.totalRecords = res.totalCount;        
+        this.totalRecords = res.totalCount;
+        this.sumaColumnas = this.utilitario.sumarColumdaData(res.data,['monto']);
+        console.log(this.sumaColumnas);
       });
   }
   ///////// lista //////////
@@ -93,9 +107,9 @@ export class ListaEgresosComponent implements OnInit {
   }
 
   ShowChild() { this.showChild = !this.showChild }
-  onDeactivate() { this.ShowChild(); }
-  onActivate() { 
-    this.showChild = true; 
+  onActivate() { this.showChild = true; }
+  onDeactivate() {
+    this.ShowChild();
     if (this.crudService.refreshByStorage('egreso')) { this.refreshModel(this.filtrosActivos); }
   }
 

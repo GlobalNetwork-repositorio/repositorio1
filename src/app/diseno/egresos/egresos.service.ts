@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Egreso } from './egreso.model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { URL_SERVICIOS } from '../../config/config';
+import { Observable } from 'rxjs/Observable';
+// import { Egreso } from './egreso.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EgresosService {
 
-  constructor() { }
+  url = URL_SERVICIOS;
 
-  buscar (Egresos: Egreso[], parametro: string): any {    
-    parametro = parametro.toLocaleLowerCase();
+  constructor(private http: HttpClient) { }
 
-    return Egresos.map(x => {
-      const cadena = `${x.conceptoEgreso.descripcion} 
-          ${x.fecha} ${x.medioPago.descripcionMedioPago} ${x.monto}
-          ${x.cuenta.banco}`.toLocaleLowerCase();
-          
-      return cadena.indexOf(parametro) !== -1 ? x : null;
-    });
+  createEgreso(datos: any): Observable<any>{    
+    const url = `${this.url}/egreso/save`;
+    const header = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let parametros = new HttpParams().set("historial", JSON.stringify(datos.historial));
+
+    localStorage.setItem('pintar', 'egreso'); // para actualizar las listas despues de modificar o guardar
+
+    return this.http.post(url, JSON.stringify(datos.modelo), { params:parametros, headers: header });
   }
+
 }

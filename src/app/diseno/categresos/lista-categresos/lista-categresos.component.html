@@ -1,16 +1,16 @@
 <div [@routerTransition] [hidden]="showChild">
-    <app-page-header [heading]="'Categoria Egreso'" [icon]="'fa-desktop'"></app-page-header>
+    <app-page-header [heading]="'Conceptos'" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
         <div class="row">
             <div class="col col-xl-12 col-lg-12">
                 
                 <div class="card mb-3">
                     <div class="card-header">
-                        Concepto Egreso
+                        Conceptos
                         <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
                         <div class="float-right">
                             <button type="button" class="btn btn-success btn-sm" [routerLink]="['/categresos/crud-categresos']" (click)="ShowChild()">
-                                <i class="fa fa-plus-circle"></i> Crear Concepto</button>
+                                <i class="fa fa-plus-circle"></i> Agregar Concepto</button>
                         </div>
                     </div>
                     

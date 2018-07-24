@@ -5,13 +5,13 @@ import { Usuario } from './usuario.model';
   providedIn: 'root'
 })
 export class UsuariosService {
-  private usuarioModel: Usuario;
+  private usuarioModel: Usuario = new Usuario;
   private userLocal: any;
   private userToken: string;
 
   constructor() {    
     this.userLocal = JSON.parse(localStorage.getItem('currentUser'));
-    this.userToken = localStorage.getItem('token');
+    this.userToken = localStorage.getItem('token') || null;
     this.ini();
   }
 
@@ -20,10 +20,14 @@ export class UsuariosService {
   }
 
   getUsuario() : Usuario {
-    return this.usuarioModel    
+    return this.usuarioModel
   }
 
   getToken(): string {
     return this.userToken;
+  }
+
+  getCurrentUser(): boolean {
+    return this.usuarioModel ? true : false;
   }
 }

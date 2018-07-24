@@ -1,39 +1,22 @@
  <div [@routerTransition] [hidden]="this.showChild">
-    <app-page-header [heading]="'Egresos'" [icon]="'fa-desktop'"></app-page-header>
+    <app-page-header [heading]="usuario.sucursal.descripcion" [icon]="'fa-desktop'"></app-page-header>
     <div [@routerTransition]>
         <div class="row">
             <div class="col col-xl-12 col-lg-12">
-
                 <div class="card mb-3">
                     <div class="card-header">
-                        Historial Egresos <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
+                         Historial Egresos <i class="fa fa-search" title="Buscar" (click)="ShowBuqueda = !ShowBuqueda"></i>
                         <div class="float-right">
                                 <button type="button" class="btn btn-success btn-sm" [routerLink]="['./crud-egresos']"
-                                (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Crear Egreso</button>
+                                (click)="ShowChild()"> <i class="fa fa-plus-circle"></i>  Nuevo Egreso</button>
                         </div>
-                    </div>                    
-                    
-                    <!-- <p-dataTable class="f-12" emptyMessage="No hay registros" [value]="db_egresos" [filterDelay]=500 [lazy]="true" (onLazyLoad)="filter($event)"
-                        selectionMode="single" [responsive]="true" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">
-
-                        <p-column field="fecha"  header="Fecha" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
-                        <p-column field="monto"  header="Monto" [style]="{'width':'90px'}" [filter]="ShowBuqueda"></p-column>
-                        <p-column field="sucursal.descripcion" [style]="{'width':'150px'}" header="Sucursal" [filter]="ShowBuqueda"></p-column>
-                        <p-column field="cuenta.banco"  header="Banco" [filter]="ShowBuqueda"></p-column>
-                        <p-column field="conceptoEgreso.descripcion"  header="Concepto" [filter]="ShowBuqueda"></p-column>
-                        <p-column field="medioPago.descripcionMedioPago" [style]="{'width':'120px'}"  header="medio" [filter]="ShowBuqueda"></p-column>
-                        <p-column [style]="{'width':'40px'}">
-                            <ng-template let-data="rowData" pTemplate type="body">
-                                <i class="fa fa-trash-o" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(data)"></i>
-                            </ng-template>
-                        </p-column>
-                    </p-dataTable>         -->
-                    
+                    </div>
+                                        
                     <p-table #dt class="f-12" [value]="db_egresos" selectionMode="single" [paginator]="true" [lazy]="true" (onLazyLoad)="filter($event)"
-                        [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]">
+                        [rows]="10" [totalRecords]="totalRecords" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30]" [responsive]="true">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th width="80px" [pSortableColumn]="'idEgreso'"> Codigo <p-sortIcon [field]="'idEgreso'"></p-sortIcon></th>
+                                <th width="80px" [pSortableColumn]="'fecha'"> Fecha <p-sortIcon [field]="'fecha'"></p-sortIcon></th>
                                 <th [pSortableColumn]="'sucursal.descripcion'">Sucursal <p-sortIcon [field]="'sucursal.descripcion'"></p-sortIcon></th>                                
                                 <th [pSortableColumn]="'cuenta.banco'">Banco<p-sortIcon [field]="'cuenta.banco'"></p-sortIcon></th>
                                 <th [pSortableColumn]="'concepto.descripcion'">Concepto<p-sortIcon [field]="'concepto.descripcion'"></p-sortIcon></th>
@@ -45,7 +28,7 @@
                             <ng-container *ngIf="ShowBuqueda">
                                 <tr>
                                     <th>
-                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'idEgreso','equals'])">
+                                        <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'fecha','contains'])">
                                     </th>
                                     <th>
                                         <input pInputText type="text" class="w-100" (input)="Typeahead.next([$event.target.value,'sucursal.descripcion','contains'])">
@@ -71,7 +54,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-item>
                             <tr [pSelectableRow]="item">
-                                <td>{{item.idEgreso}}</td>
+                                <td>{{item.fecha}}</td>
                                 <td>{{item.sucursal.descripcion}}</td>
                                 <td>{{item.cuenta.banco}}</td>
                                 <td>{{item?.conceptoRegistro?.concepto?.descripcion}}</td>
@@ -80,10 +63,19 @@
                                 <td>{{item.monto | number:'0.2'}}</td>
                                 <td>
                                     <i class="fa fa-trash-o cursor pr-2" aria-hidden="true" title="Eliminar" (click)="borrarRegistro(item)"></i>
-                                    <i class="fa fa-list-alt cursor" aria-hidden="true" title="Detalles" [routerLink]="['./crud-egresos', {id: item.idEgreso}]"></i>
+                                    <i class="fa fa-list-alt cursor" aria-hidden="true" title="Ver detalles" [routerLink]="['./crud-egresos', {id: item.idEgreso}]"></i>
                                 </td>
-                            </tr>
+                            </tr>                            
                         </ng-template>
+                        <ng-template pTemplate="footer">
+                            <ng-container *ngIf="sumaColumnas">
+                                <tr>
+                                    <td colspan="6"><span>{{totalRecords}} Registros encontrados</span></td>
+                                    <td><h6 class="bold">{{sumaColumnas[0].suma | number:'0.2'}}</h6></td>
+                                    <td>-</td>
+                                </tr>
+                            </ng-container>
+                        </ng-template>                                                
                     </p-table>
                 </div>
             </div>

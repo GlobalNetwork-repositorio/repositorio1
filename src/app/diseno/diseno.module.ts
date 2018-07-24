@@ -11,11 +11,11 @@ import { ServiceModule } from './services/service.module';
 
 @NgModule({
     imports: [
-        CommonModule,        
-        DisenoRoutingModule,        
+        CommonModule,                
         TranslateModule,
         NgbDropdownModule.forRoot(),
-        ServiceModule        
+        DisenoRoutingModule,
+        ServiceModule
     ],    
     declarations: [DisenoComponent, SidebarComponent, HeaderComponent]
 })
